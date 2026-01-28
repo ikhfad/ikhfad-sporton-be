@@ -2,6 +2,8 @@
 
 **ikhfad-sporton-be** is a backend API for the Sporton application, built with Node.js, Express, and TypeScript. It provides authentication services using JWT tokens and integrates with MongoDB for data persistence. The API includes user sign-in functionality and admin user initialization, with middleware for protecting routes.
 
+---
+
 ## 🚀 Development Environment
 
 This project is developed and optimized using [DDEV](https://ddev.com/), a Docker-based local development tool. Using DDEV ensures a consistent environment across different machines and handles SSL, networking, and performance optimizations (like Mutagen) automatically.
@@ -76,10 +78,11 @@ Windows requires **Developer Mode** to be active so that pnpm can create symboli
 To avoid sync conflicts, **always run package commands inside DDEV**.
 
 - **DO NOT** delete `node_modules` manually from Windows File Explorer while DDEV is running.
-- If you need a clean install, run:
+- If you need a clean install, run this first:
   ```powershell
   ddev stop
   ```
+- Then proceed to delete the `node_modules`
 
 ---
 
