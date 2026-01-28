@@ -1,0 +1,8 @@
+#!/bin/bash
+## Description: Run pnpm commands inside the web container
+## Usage: pnpm [flags] [args]
+## Example: "ddev pnpm install" or "ddev pnpm add lucide-react"
+
+# Ensure corepack is enabled so it respects package.json version
+corepack enable pnpm >/dev/null 2>&1
+pnpm "$@"

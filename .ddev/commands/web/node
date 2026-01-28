@@ -1,0 +1,6 @@
+#!/bin/bash
+## Description: Run node inside the web container
+## Usage: node [flags] [args]
+## Example: "ddev node --version" or "ddev node server.js"
+
+node "$@"
