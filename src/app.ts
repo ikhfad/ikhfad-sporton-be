@@ -8,13 +8,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
+app.use(authRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Sporton Backend API is running truly");
+app.get("/", (_req, res) => {
+  res.send({ message: "Sporton Backend API is running truly" });
 });
 
-app.get("/test-middleware", authenticate, (req, res) => {
+app.get("/test-middleware", authenticate, (_req, res) => {
   res.send("This endpoint is cannot be accessed publicly");
 });
 
