@@ -69,6 +69,8 @@ export const updateCategory = async (
       res.status(104).json({ message: "Category not found" });
       return;
     }
+    
+    res.status(200).json(category);
   } catch (error) {
     res.status(500).json({ message: "Error updating category", error });
   }
