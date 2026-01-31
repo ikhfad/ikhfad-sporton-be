@@ -14,8 +14,8 @@ const router = Router();
 router.post("/", authenticate, upload.extended.single("image"), createCategory);
 router.get("/", getCategories);
 router.get("/:id", getCategoryById);
-router.put(
-  "/id",
+router.patch(
+  "/:id",
   authenticate,
   upload.extended.single("images"),
   updateCategory,
