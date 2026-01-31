@@ -86,6 +86,6 @@ export const deleteCategory = async (
     }
     res.status(200).json({ message: "Category deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error updating category", error });
+    res.status(500).json({ message: "Error deleting category", error });
   }
 };
