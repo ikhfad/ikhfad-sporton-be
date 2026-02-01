@@ -30,7 +30,7 @@ const getStorage = (subfolder: string = ""): StorageEngine => {
 };
 
 const STANDARD_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const VECTOR_TYPES = ["image/svg+xml"];
+const VECTOR_TYPES = ["image/svg+xml", "image/svg"];
 
 const createFilter = (allowedMimes: string[]) => {
   return (
@@ -41,33 +41,15 @@ const createFilter = (allowedMimes: string[]) => {
     if (allowedMimes.includes(file.mimetype)) {
       callback(null, true);
     } else {
-      callback(
-        new Error(`Invalid format. Allowed: ${allowedMimes.join(", ")}`) as any,
-        false,
+      const error = new Error(
+        `Invalid format: ${file.mimetype}. Allowed: ${allowedMimes.join(", ")}`,
       );
+      callback(error as any, false);
     }
   };
 };
 
 export const upload = {
-  standard: multer({
-    storage: getStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 },
-    fileFilter: createFilter(STANDARD_TYPES),
-  }),
-
-  extended: multer({
-    storage: getStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 },
-    fileFilter: createFilter([...STANDARD_TYPES, ...VECTOR_TYPES]),
-  }),
-
-  vector: multer({
-    storage: getStorage(),
-    limits: { fileSize: 1 * 1024 * 1024 },
-    fileFilter: createFilter(VECTOR_TYPES),
-  }),
-
   products: multer({
     storage: getStorage("products"),
     limits: { fileSize: 5 * 1024 * 1024 },
