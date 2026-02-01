@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-## #ddev-generated: If you want to edit and own this file, remove this line.
 ## Description: Launch a browser with Mongo Express
 ## Usage: mongo-express
 ## Example: "ddev mongo-express"
+
+# Define ANSI Color Codes
+GREEN='\033[0;32m' # Green
+RED='\033[0;31m'   # Red
+NC='\033[0m'      # No Color / Reset
 
 # Determine whether to use HTTP or HTTPS based on environment
 PROTOCOL="HTTP"
@@ -18,8 +22,9 @@ ddev exec -s mongo-express true >/dev/null 2>&1 || ddev start --profiles mongo-e
 DDEV_MONGO_EXPRESS_PORT=$(ddev exec -s mongo-express sh -c "printenv | grep -w ${PROTOCOL}_EXPOSE | cut -d '=' -f 2 | cut -d ':' -f 1")
 
 if [ -z "$DDEV_MONGO_EXPRESS_PORT" ]; then
-    echo "Error: Could not retrieve Mongo Express port."
+    printf "${RED}Error: Could not retrieve Mongo Express port.${NC}\n"
     exit 1
 fi
 
-ddev launch :"$DDEV_MONGO_EXPRESS_PORT"
+# Echo the colored link using printf for cross-shell compatibility
+printf "${GREEN}Mongo Express is ready at: ${DDEV_PRIMARY_URL}:${DDEV_MONGO_EXPRESS_PORT}${NC}\n"

@@ -13,7 +13,7 @@ disable_upload_dirs_warning: true
 
 hooks:
   post-start:
-    - exec-host: "ddev mongo-express"
+    - exec-host: "ddev mongo-wait"
 
 # Map the nodejs port (5000) to the standard DDEV URL
 web_extra_exposed_ports:

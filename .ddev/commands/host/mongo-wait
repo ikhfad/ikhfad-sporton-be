@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+## Description: Wait 5 seconds then start mongo-express
+## Usage: mongo-wait
+## Example: "ddev mongo-wait"
+
+: <<'BATCH'
+@echo off
+timeout /t 5 > nul
+ddev mongo-express
+exit /b
+BATCH
+
+# Linux section
+sleep 5
+ddev mongo-express
