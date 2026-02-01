@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Product from "../models/product.model";
+import fs from "fs";
 
 export const createProduct = async (
   req: Request,
@@ -16,6 +17,11 @@ export const createProduct = async (
     await product.save();
     res.status(201).json(product);
   } catch (error) {
+    if (req.file) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file after DB failure:", err);
+      });
+    }
     res.status(500).json({ message: "Error creating product" });
   }
 };
@@ -57,26 +63,40 @@ export const updateProduct = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
+  let oldImagePath: string | null = null;
+
   try {
     const productData = req.body;
+    const existingProduct = await Product.findById(req.params.id);
+
+    if (!existingProduct) {
+      if (req.file) fs.unlinkSync(req.file.path);
+      res.status(404).json({ message: "Category not found" });
+      return;
+    }
 
     if (req.file) {
+      oldImagePath = existingProduct.imageUrl;
       productData.imageUrl = req.file.path;
     }
 
-    const product = await Product.findByIdAndUpdate(
-      req.params._id,
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
       productData,
       { new: true },
     );
 
-    if (!product) {
-      res.status(404).json({ message: "Product not found" });
-      return;
+    if (req.file && oldImagePath && fs.existsSync(oldImagePath)) {
+      fs.unlink(oldImagePath, (err) => {
+        if (err) console.error("Failed to delete old image:", err);
+      });
     }
 
-    res.status(200).json(product);
+    res.status(200).json(updatedProduct);
   } catch (error) {
+    if (req.file) {
+      fs.unlink(req.file.path, () => {});
+    }
     res.status(500).json({ message: "Error updating product", error });
   }
 };
@@ -86,15 +106,29 @@ export const deleteProduct = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
 
     if (!product) {
-      res.status(104).json({ message: "Product not found" });
+      res.status(404).json({ message: "Product not found" });
       return;
     }
 
-    res.status(200).json({ message: "Product deleted successfully" });
+    const imagePath = product.imageUrl;
+    await Product.findByIdAndDelete(req.params.id);
+
+    if (imagePath && fs.existsSync(imagePath)) {
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error(`Failed to delete image at ${imagePath}:`, err);
+        }
+      });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Product and associated image deleted successfully" });
   } catch (error) {
+    console.error("Delete Product Error:", error);
     res.status(500).json({ message: "Error deleting product", error });
   }
 };

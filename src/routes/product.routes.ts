@@ -11,13 +11,13 @@ import { authenticate } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.post("/", authenticate, upload.extended.single("image"), createProduct);
+router.post("/", authenticate, upload.products.single("image"), createProduct);
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 router.patch(
   "/:id",
   authenticate,
-  upload.standard.single("image"),
+  upload.products.single("image"),
   updateProduct,
 );
 router.delete("/:id", authenticate, deleteProduct);
