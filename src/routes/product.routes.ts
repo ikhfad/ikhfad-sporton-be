@@ -17,7 +17,7 @@ router.get("/:id", getProductById);
 router.patch(
   "/:id",
   authenticate,
-  upload.standard.single("images"),
+  upload.standard.single("image"),
   updateProduct,
 );
 router.delete("/:id", authenticate, deleteProduct);
