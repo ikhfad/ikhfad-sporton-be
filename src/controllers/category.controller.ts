@@ -8,6 +8,7 @@ export const createCategory = async (
 ): Promise<void> => {
   try {
     const categoryData = req.body;
+
     if (req.file) {
       categoryData.imageUrl = req.file.path;
     }
@@ -26,7 +27,7 @@ export const createCategory = async (
 };
 
 export const getCategories = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
