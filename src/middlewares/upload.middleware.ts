@@ -38,13 +38,20 @@ const createFilter = (allowedMimes: string[]) => {
     file: Express.Multer.File,
     callback: FileFilterCallback,
   ) => {
-    if (allowedMimes.includes(file.mimetype)) {
+    const isAllowedMime = allowedMimes.includes(file.mimetype);
+
+    const isSvgExtension =
+      path.extname(file.originalname).toLowerCase() === ".svg";
+    const isSvgMime =
+      file.mimetype.includes("svg") || file.mimetype.includes("xml");
+
+    if (isAllowedMime || (isSvgExtension && isSvgMime)) {
       callback(null, true);
     } else {
-      const error = new Error(
-        `Invalid format: ${file.mimetype}. Allowed: ${allowedMimes.join(", ")}`,
+      callback(
+        new Error(`File type ${file.mimetype} not supported.`) as any,
+        false,
       );
-      callback(error as any, false);
     }
   };
 };
