@@ -33,12 +33,12 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "mongosh --eval 'db.runCommand(\"ping\").ok' localhost:27017/test --quiet"]
       interval: 5s
-      timeout: 10s
+      timeout: 30s
       retries: 5
 
   mongo-express:
     container_name: ddev-${DDEV_SITENAME}-mongo-express
-    image: ${MONGO_EXPRESS_DOCKER_IMAGE:-mongo-express:latest}
+    image: ${MONGO_EXPRESS_DOCKER_IMAGE:-mongo-express:1.0.2-20-alpine3.19}
     restart: "no"
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
@@ -48,6 +48,9 @@ services:
     environment:
       - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
       - ME_CONFIG_BASICAUTH=false
+      - ME_CONFIG_BASICAUTH_ENABLED=false
+      - ME_CONFIG_BASICAUTH_USERNAME=""
+      - ME_CONFIG_BASICAUTH_PASSWORD=""
       - ME_CONFIG_MONGODB_URL=mongodb://db:db@mongo:27017
       - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=9091:8081
