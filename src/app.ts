@@ -2,9 +2,10 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import categoryRoutes from "./routes/category.routes";
+import productRoutes from "./routes/product.routes";
+import bankRoutes from "./routes/bank.routes";
 import { authenticate } from "./middlewares/auth.middleware";
 import path from "path";
-import productRoutes from "./routes/product.routes";
 
 const app = express();
 
@@ -16,13 +17,14 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/banks", bankRoutes);
 
 app.get("/", (_req, res) => {
   res.send({ message: "Sporton Backend API is running truly" });
 });
 
 app.get("/test-middleware", authenticate, (_req, res) => {
-  res.send("This endpoint is cannot be accessed publicly");
+  res.send("This endpoint is protected");
 });
 
 export default app;
