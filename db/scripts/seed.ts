@@ -113,52 +113,52 @@ const RAW_USER = {
 const RAW_BANKS = [
   {
     bankName: "BCA",
-    accountNumber: 123123,
+    accountNumber: "123123",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "Mandiri",
-    accountNumber: 1212312313123,
+    accountNumber: "1212312313123",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "BRI",
-    accountNumber: 1123123123,
+    accountNumber: "1123123123",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "BNI",
-    accountNumber: 9876543210,
+    accountNumber: "9876543210",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "BSI",
-    accountNumber: 7141234567,
+    accountNumber: "7141234567",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "CIMB Niaga",
-    accountNumber: 860012345600,
+    accountNumber: "860012345600",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "Permata Bank",
-    accountNumber: 4101234567,
+    accountNumber: "4101234567",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "Bank Danamon",
-    accountNumber: 3612345678,
+    accountNumber: "3612345678",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "Bank Tabungan Negara (BTN)",
-    accountNumber: 1002345678,
+    accountNumber: "1002345678",
     accountName: "PT SportOn Digital Indonesia",
   },
   {
     bankName: "Bank OCBC NISP",
-    accountNumber: 545800012345,
+    accountNumber: "545800012345",
     accountName: "PT SportOn Digital Indonesia",
   },
 ];
@@ -227,10 +227,8 @@ async function seed() {
     await mongoose.connect(DB_URI);
     console.log(`✅ Connected to database: ${DB_URI}`);
 
-    // 2. Cleanup existing images BEFORE wiping DB
-    // We fetch them to know which files to delete
+    // 2. Cleanup existing images
     console.log("🧹 Cleaning up old images...");
-
     const [categories, products, transactions] = await Promise.all([
       Category.find().select("imageUrl"),
       Product.find().select("imageUrl"),
@@ -250,7 +248,7 @@ async function seed() {
       deleteFile(transaction.paymentProof, "transactions"),
     );
 
-    // 2.5. Clear Database Data
+    // 3. Wipe Database
     console.log("🗑️  Wiping database collections...");
     await Promise.all([
       Category.deleteMany({}),
@@ -260,64 +258,65 @@ async function seed() {
       Transaction.deleteMany({}),
     ]);
 
-    // 3. Seed User (with hashed password)
+    // 4. Seed User
     console.log("👤 Seeding User...");
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(RAW_USER.password, salt);
-
-    const user = await User.create({
+    await User.create({
       name: RAW_USER.name,
       email: RAW_USER.email,
       password: hashedPassword,
     });
-    console.log(`✅ User created: ${user.email}`);
 
-    // 4. Seed Banks
+    // 5. Seed Banks (Using create loop)
     console.log("🏦 Seeding Banks...");
-    const banks = await Bank.insertMany(RAW_BANKS);
+    for (const bankData of RAW_BANKS) {
+      await Bank.create(bankData);
+    }
 
-    // 5. Seed Categories
+    // 6. Seed Categories (Using create loop)
     console.log("🏷️  Seeding Categories...");
-    const categoryDocs = await Category.insertMany(
-      RAW_CATEGORIES.map((categories) => ({
-        name: categories.name,
-        description:
-          categories.description ||
-          `Premium equipment for ${categories.name} enthusiasts.`,
-        // Pass "categories" subfolder
-        imageUrl: processFile(categories.file, "categories"),
-      })),
-    );
+    const categoryDocs: any[] = [];
 
-    // Create a map for easy category lookup by name
+    for (const catData of RAW_CATEGORIES) {
+      const doc = await Category.create({
+        name: catData.name,
+        description:
+          catData.description ||
+          `Premium equipment for ${catData.name} enthusiasts.`,
+        imageUrl: processFile(catData.file, "categories"),
+      });
+      categoryDocs.push(doc);
+    }
+
     const categoryMap = new Map(categoryDocs.map((c) => [c.name, c._id]));
 
-    // 6. Seed Products
+    // 7. Seed Products (Using create loop)
     console.log("🛍️  Seeding Products...");
-    const productDocs = await Product.insertMany(
-      RAW_PRODUCTS.map((p) => {
-        const catId = categoryMap.get(p.categoryName);
-        if (!catId) {
-          throw new Error(
-            `Category "${p.categoryName}" not found for product "${p.name}"`,
-          );
-        }
+    const productDocs: any[] = [];
 
-        return {
-          name: p.name,
-          description:
-            p.description ||
-            `Professional-grade ${p.name.toLowerCase()} for high performance.`,
-          price: p.price,
-          stock: p.stock,
-          category: catId,
-          // Pass "products" subfolder
-          imageUrl: processFile(p.file, "products"),
-        };
-      }),
-    );
+    for (const prodData of RAW_PRODUCTS) {
+      const catId = categoryMap.get(prodData.categoryName);
+      if (!catId) {
+        throw new Error(
+          `Category "${prodData.categoryName}" not found for product "${prodData.name}"`,
+        );
+      }
 
-    // 7. Seed Transactions
+      const doc = await Product.create({
+        name: prodData.name,
+        description:
+          prodData.description ||
+          `Professional-grade ${prodData.name.toLowerCase()} for high performance.`,
+        price: prodData.price,
+        stock: prodData.stock,
+        category: catId,
+        imageUrl: processFile(prodData.file, "products"),
+      });
+      productDocs.push(doc);
+    }
+
+    // 8. Seed Transaction
     console.log("💳 Seeding Transactions...");
     const basketball = productDocs.find((p) => p.name.includes("Basketball"));
     const vanguard = productDocs.find((p) => p.name.includes("Vanguard"));
