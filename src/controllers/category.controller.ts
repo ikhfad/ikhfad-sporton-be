@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
 import Category from "../models/category.model";
 import fs from "fs";
+import path from "path";
+import mongoose from "mongoose";
 
 export const createCategory = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const categoryData = req.body;
+    const categoryData = { ...req.body };
 
     if (req.file) {
-      categoryData.imageUrl = req.file.path;
+      categoryData.imageUrl = `/categories/${req.file.filename}`;
     }
 
     const category = new Category(categoryData);
@@ -60,21 +62,28 @@ export const updateCategory = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  let oldImagePath: string | null = null;
+  let oldImageRelativePath: string | null = null;
 
   try {
-    const categoryData = req.body;
+    const id = req.params.id as string;
+    const categoryData = { ...req.body };
     const existingCategory = await Category.findById(req.params.id);
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (req.file) fs.unlink(req.file.path, () => {});
+      res.status(400).json({ message: "Invalid Category ID format" });
+      return;
+    }
+
     if (!existingCategory) {
-      if (req.file) fs.unlinkSync(req.file.path);
+      if (req.file) fs.unlink(req.file.path, () => {});
       res.status(404).json({ message: "Category not found" });
       return;
     }
 
     if (req.file) {
-      oldImagePath = existingCategory.imageUrl;
-      categoryData.imageUrl = req.file.path;
+      oldImageRelativePath = existingCategory.imageUrl;
+      categoryData.imageUrl = `/categories/${req.file.filename}`;
     }
 
     const updatedCategory = await Category.findByIdAndUpdate(
@@ -83,10 +92,19 @@ export const updateCategory = async (
       { new: true },
     );
 
-    if (req.file && oldImagePath && fs.existsSync(oldImagePath)) {
-      fs.unlink(oldImagePath, (err) => {
-        if (err) console.error("Failed to delete old image:", err);
-      });
+    if (req.file && oldImageRelativePath) {
+      const fileName = path.basename(oldImageRelativePath);
+      const oldPhysicalPath = path.join(
+        process.cwd(),
+        "uploads",
+        "categories",
+        fileName,
+      );
+      if (fs.existsSync(oldPhysicalPath)) {
+        fs.unlink(oldPhysicalPath, (err) => {
+          if (err) console.error("Failed to delete old image:", err);
+        });
+      }
     }
 
     res.status(200).json(updatedCategory);
@@ -103,22 +121,44 @@ export const deleteCategory = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const category = await Category.findById(req.params.id);
+    const id = req.params.id as string;
+    const category = await Category.findById(id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400).json({ message: "Invalid Category ID format" });
+      return;
+    }
 
     if (!category) {
       res.status(404).json({ message: "Category not found" });
       return;
     }
 
-    const imagePath = category.imageUrl;
-    await Category.findByIdAndDelete(req.params.id);
+    const imageRelativePath = category.imageUrl;
+    await Category.findByIdAndDelete(id);
 
-    if (imagePath && fs.existsSync(imagePath)) {
-      fs.unlink(imagePath, (err) => {
-        if (err) {
-          console.error(`Failed to delete image at ${imagePath}:`, err);
-        }
-      });
+    if (imageRelativePath) {
+      const fileName = path.basename(imageRelativePath);
+
+      const physicalPath = path.join(
+        process.cwd(),
+        "uploads",
+        "categories",
+        fileName,
+      );
+
+      if (fs.existsSync(physicalPath)) {
+        fs.unlink(physicalPath, (err) => {
+          if (err) {
+            console.error(`Failed to delete image at ${physicalPath}:`, err);
+          }
+        });
+      } else {
+        console.log(
+          "File not found on disk, skipped deletion: ",
+          physicalPath,
+        );
+      }
     }
 
     res
