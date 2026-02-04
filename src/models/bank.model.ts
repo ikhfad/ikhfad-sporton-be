@@ -12,7 +12,11 @@ const BankSchema: Schema = new Schema(
     accountName: { type: String, required: true },
     accountNumber: { type: String, required: true },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: { versionKey: false },
+    toObject: { versionKey: false },
+  },
 );
 
 export default mongoose.model<IBank>("Bank", BankSchema);

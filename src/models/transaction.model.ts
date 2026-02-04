@@ -42,7 +42,11 @@ const TransactionSchema: Schema = new Schema(
     customerContact: { type: String, required: true },
     customerAddress: { type: String, required: true },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: { versionKey: false },
+    toObject: { versionKey: false },
+  },
 );
 
 export default mongoose.model<ITransaction>("Transaction", TransactionSchema);

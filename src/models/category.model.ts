@@ -12,7 +12,11 @@ const CategorySchema: Schema = new Schema(
     description: { type: String, required: true },
     imageUrl: { type: String, required: true },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: { versionKey: false },
+    toObject: { versionKey: false },
+  },
 );
 
 export default mongoose.model<ICategory>("Category", CategorySchema);

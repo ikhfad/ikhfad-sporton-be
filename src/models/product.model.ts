@@ -22,7 +22,11 @@ const ProductSchema: Schema = new Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: { versionKey: false },
+    toObject: { versionKey: false },
+  },
 );
 
 export default mongoose.model<IProduct>("Product", ProductSchema);
