@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Product from "../models/product.model";
 import fs from "fs";
+import mongoose from "mongoose";
+import path from "path";
 
 export const createProduct = async (
   req: Request,
@@ -10,7 +12,7 @@ export const createProduct = async (
     const productData = req.body;
 
     if (req.file) {
-      productData.imageUrl = req.file.path;
+      productData.imageUrl = `/products/${req.file.filename}`;
     }
 
     const product = new Product(productData);
@@ -63,33 +65,48 @@ export const updateProduct = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  let oldImagePath: string | null = null;
+  let oldImageRelativePath: string | null = null;
 
   try {
+    const id = req.params.id as string;
     const productData = req.body;
-    const existingProduct = await Product.findById(req.params.id);
+
+    const existingProduct = await Product.findById(id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (req.file) fs.unlink(req.file.path, () => {});
+      res.status(400).json({ message: "Invalid Category ID format" });
+      return;
+    }
 
     if (!existingProduct) {
-      if (req.file) fs.unlinkSync(req.file.path);
+      if (req.file) fs.unlink(req.file.path, () => {});
       res.status(404).json({ message: "Category not found" });
       return;
     }
 
     if (req.file) {
-      oldImagePath = existingProduct.imageUrl;
-      productData.imageUrl = req.file.path;
+      oldImageRelativePath = existingProduct.imageUrl;
+      productData.imageUrl = `/products/${req.file.filename}`;
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      productData,
-      { new: true },
-    );
+    const updatedProduct = await Product.findByIdAndUpdate(id, productData, {
+      new: true,
+    });
 
-    if (req.file && oldImagePath && fs.existsSync(oldImagePath)) {
-      fs.unlink(oldImagePath, (err) => {
-        if (err) console.error("Failed to delete old image:", err);
-      });
+    if (req.file && oldImageRelativePath) {
+      const fileName = path.basename(oldImageRelativePath);
+      const oldPhysicalPath = path.join(
+        process.cwd(),
+        "uploads",
+        "products",
+        fileName,
+      );
+      if (fs.existsSync(oldPhysicalPath)) {
+        fs.unlink(oldPhysicalPath, (err) => {
+          if (err) console.error("Failed to delete old image:", err);
+        });
+      }
     }
 
     res.status(200).json(updatedProduct);
@@ -106,22 +123,41 @@ export const deleteProduct = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const product = await Product.findById(req.params.id);
+    const id = req.params.id as string;
+    const product = await Product.findById(id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400).json({ message: "Invalid Category ID format" });
+      return;
+    }
 
     if (!product) {
       res.status(404).json({ message: "Product not found" });
       return;
     }
 
-    const imagePath = product.imageUrl;
-    await Product.findByIdAndDelete(req.params.id);
+    const imageRelativePath = product.imageUrl;
+    await Product.findByIdAndDelete(id);
 
-    if (imagePath && fs.existsSync(imagePath)) {
-      fs.unlink(imagePath, (err) => {
-        if (err) {
-          console.error(`Failed to delete image at ${imagePath}:`, err);
-        }
-      });
+    if (imageRelativePath) {
+      const fileName = path.basename(imageRelativePath);
+
+      const physicalPath = path.join(
+        process.cwd(),
+        "uploads",
+        "products",
+        fileName,
+      );
+
+      if (fs.existsSync(physicalPath)) {
+        fs.unlink(physicalPath, (err) => {
+          if (err) {
+            console.error(`Failed to delete image at ${physicalPath}:`, err);
+          }
+        });
+      } else {
+        console.log("File not found on disk, skipped deletion: ", physicalPath);
+      }
     }
 
     res
