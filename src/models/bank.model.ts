@@ -3,14 +3,14 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface IBank extends Document {
   bankName: string;
   accountName: string;
-  accountNumber: number;
+  accountNumber: string;
 }
 
 const BankSchema: Schema = new Schema(
   {
     bankName: { type: String, required: true },
     accountName: { type: String, required: true },
-    accountNumber: { type: Number, required: true },
+    accountNumber: { type: String, required: true },
   },
   { timestamps: true },
 );

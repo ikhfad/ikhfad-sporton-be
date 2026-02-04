@@ -4,14 +4,14 @@ import {
   getBankById,
   updateBank,
   deleteBank,
-  getBank,
+  getBanks,
 } from "../controllers/bank.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 
 const router = Router();
 
 router.post("/", authenticate, createBank);
-router.get("/", getBank);
+router.get("/", getBanks);
 router.get("/:id", getBankById);
 router.patch("/:id", authenticate, updateBank);
 router.delete("/:id", authenticate, deleteBank);
