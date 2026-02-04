@@ -86,11 +86,9 @@ export const updateCategory = async (
       categoryData.imageUrl = `/categories/${req.file.filename}`;
     }
 
-    const updatedCategory = await Category.findByIdAndUpdate(
-      req.params.id,
-      categoryData,
-      { new: true },
-    );
+    const updatedCategory = await Category.findByIdAndUpdate(id, categoryData, {
+      new: true,
+    });
 
     if (req.file && oldImageRelativePath) {
       const fileName = path.basename(oldImageRelativePath);
@@ -154,10 +152,7 @@ export const deleteCategory = async (
           }
         });
       } else {
-        console.log(
-          "File not found on disk, skipped deletion: ",
-          physicalPath,
-        );
+        console.log("File not found on disk, skipped deletion: ", physicalPath);
       }
     }
 
