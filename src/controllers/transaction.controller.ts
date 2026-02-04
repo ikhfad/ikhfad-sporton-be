@@ -91,23 +91,45 @@ export const updateTransaction = async (
   try {
     const id = req.params.id as string;
     const { status } = req.body;
-    const transactionData = status;
-    const existingTransaction = await Transaction.findById(id);
+    const allowedStatuses = ["paid", "rejected"];
+
+    if (!allowedStatuses.includes(status)) {
+      res.status(400).json({
+        message: "Invalid status. Only 'paid' or 'rejected' are allowed!",
+      });
+      return;
+    }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(400).json({ message: "Invalid Transaction ID format" });
       return;
     }
 
+    const existingTransaction = await Transaction.findById(id);
+
     if (!existingTransaction) {
       res.status(404).json({ message: "Transaction not found" });
       return;
     }
 
-    if (status === "paid" && existingTransaction.status !== "paid") {
+    const previousStatus = existingTransaction.status;
+
+    // SCENARIO 1: Transitioning TO 'paid' from something else
+    // Prevents double-deduction if status is already 'paid'
+    if (status === "paid" && previousStatus !== "paid") {
       for (const item of existingTransaction.purchasedItems) {
         await Product.findByIdAndUpdate(item.productId, {
-          $increment: { stock: -item.qty },
+          $inc: { stock: -item.qty },
+        });
+      }
+    }
+
+    // SCENARIO 2: Transitioning FROM 'paid' TO 'rejected'
+    // Restocks the items because the sale fell through
+    else if (status === "rejected" && previousStatus === "paid") {
+      for (const item of existingTransaction.purchasedItems) {
+        await Product.findByIdAndUpdate(item.productId, {
+          $inc: { stock: item.qty }, // Adding back to stock
         });
       }
     }
