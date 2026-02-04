@@ -45,7 +45,14 @@ export const getCategoryById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const category = await Category.findById(req.params.id);
+    const id = req.params.id as string;
+    const category = await Category.findById(id);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (req.file) fs.unlink(req.file.path, () => {});
+      res.status(400).json({ message: "Invalid Category ID format" });
+      return;
+    }
 
     if (!category) {
       res.status(404).json({ message: "Category not found" });

@@ -48,7 +48,14 @@ export const getProductById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const product = await Product.findById(req.params.id).populate("category");
+    const id = req.params.id as string;
+    const product = await Product.findById(id).populate("category");
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      if (req.file) fs.unlink(req.file.path, () => {});
+      res.status(400).json({ message: "Invalid Product ID format" });
+      return;
+    }
 
     if (!product) {
       res.status(404).json({ message: "Product not found" });
@@ -75,13 +82,13 @@ export const updateProduct = async (
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       if (req.file) fs.unlink(req.file.path, () => {});
-      res.status(400).json({ message: "Invalid Category ID format" });
+      res.status(400).json({ message: "Invalid Product ID format" });
       return;
     }
 
     if (!existingProduct) {
       if (req.file) fs.unlink(req.file.path, () => {});
-      res.status(404).json({ message: "Category not found" });
+      res.status(404).json({ message: "Product not found" });
       return;
     }
 
