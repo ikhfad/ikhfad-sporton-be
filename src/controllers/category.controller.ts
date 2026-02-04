@@ -74,7 +74,7 @@ export const updateCategory = async (
   try {
     const id = req.params.id as string;
     const categoryData = { ...req.body };
-    const existingCategory = await Category.findById(req.params.id);
+    const existingCategory = await Category.findById(id);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       if (req.file) fs.unlink(req.file.path, () => {});
