@@ -142,7 +142,7 @@ ikhfad-sporton-be/
 ├── .ddev/               # DDEV and MongoDB 8 service configuration
 ├── src/                 # Main source code directory
 │   ├── controllers/     # Request handlers and business logic
-│   ├── middlewares/      # Global Express middleware (Auth, Error handling)
+│   ├── middlewares/     # Global Express middleware (Auth, Error handling)
 │   ├── models/          # Mongoose Schemas and Models (User, Product, etc.)
 │   ├── routes/          # API endpoint definitions and versioning
 │   ├── app.ts           # Express app configuration (routes, middleware, global settings)
@@ -166,4 +166,4 @@ This project follows the [Conventional Commits](https://www.conventionalcommits.
 | `style`    | UI/CSS changes (e.g., `style: change main section min height`)   |
 | `refactor` | Code cleanup (e.g., `refactor: simplify customer contact input`) |
 | `chore`    | Tool/Config updates (e.g., `chore: bump node to v24.13.0`)       |
-| `docs`     | Documentation updates                                            |
+| `docs`     | Documentation updates (e.g, `docs: update project structure`)    |
