@@ -101,6 +101,23 @@ To avoid sync conflicts, **always run package commands inside DDEV**.
 
 ---
 
+## 🗄️ Database Seeding
+
+To populate the database with example data (categories, products, etc.), run the seed script:
+
+- **Without DDEV:**
+
+  ```bash
+  pnpm ts-node db/scripts/seed.ts
+  ```
+
+- **With DDEV:**
+  ```bash
+  ddev pnpm ts-node db/scripts/seed.ts
+  ```
+
+---
+
 ## 🛠 Manual Installation (Without DDEV)
 
 If you prefer to run the project natively on your host machine, ensure you have **Node.js 24+** and **pnpm** installed.
@@ -124,12 +141,11 @@ If you prefer to run the project natively on your host machine, ensure you have 
 ikhfad-sporton-be/
 ├── .ddev/               # DDEV and MongoDB 8 service configuration
 ├── src/                 # Main source code directory
-│   ├── config/          # Centralized configuration (DB connection, env loaders)
 │   ├── controllers/     # Request handlers and business logic
-│   ├── middleware/      # Global Express middleware (Auth, Error handling)
+│   ├── middlewares/      # Global Express middleware (Auth, Error handling)
 │   ├── models/          # Mongoose Schemas and Models (User, Product, etc.)
 │   ├── routes/          # API endpoint definitions and versioning
-│   ├── types/           # Global TypeScript interfaces and API response shapes
+│   ├── app.ts           #  
 │   └── server.ts        # Entry point: Express setup and DB connection
 ├── .env                 # Local secrets (Ignored by Git)
 ├── .env.example         # Template for environment variables
