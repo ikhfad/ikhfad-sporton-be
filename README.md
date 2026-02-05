@@ -145,7 +145,7 @@ ikhfad-sporton-be/
 │   ├── middlewares/      # Global Express middleware (Auth, Error handling)
 │   ├── models/          # Mongoose Schemas and Models (User, Product, etc.)
 │   ├── routes/          # API endpoint definitions and versioning
-│   ├── app.ts           #  
+│   ├── app.ts           # Express app configuration (routes, middleware, global settings)
 │   └── server.ts        # Entry point: Express setup and DB connection
 ├── .env                 # Local secrets (Ignored by Git)
 ├── .env.example         # Template for environment variables
