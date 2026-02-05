@@ -69,6 +69,7 @@
       body {
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 16px;
         background-color: var(--bg-color);
         color: var(--text-primary);
         line-height: 1.6;
@@ -124,23 +125,23 @@
         gap: 8px;
         transition: all 0.3s ease;
         z-index: 1001;
-        box-shadow: 0 3px 4px rgba(37, 99, 235, 0.4);
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
       }
 
       .theme-toggle:hover {
         background: var(--secondary-color);
         transform: translateY(-2px);
-        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.5);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
       }
 
       [data-theme="light"] .theme-toggle {
         background: #1e40af;
-        box-shadow: 0 3px 4px rgba(30, 64, 175, 0.3);
+        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
       }
 
       [data-theme="light"] .theme-toggle:hover {
         background: #1e3a8a;
-        box-shadow: 0 6px 8px rgba(30, 64, 175, 0.4);
+        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
       }
 
       .docs-layout {
@@ -168,11 +169,11 @@
       }
 
       .sidebar-title {
-        font-size: 0.75rem;
+        font-size: 1rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: var(--text-secondary);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-weight: 600;
       }
 
@@ -186,10 +187,10 @@
 
       .sidebar-nav a {
         display: block;
-        padding: 8px 15px;
+        padding: 10px 15px;
         text-decoration: none;
         color: var(--text-secondary);
-        font-size: 0.9rem;
+        font-size: 1rem;
         border-left: 3px solid transparent;
         transition: all 0.2s ease;
       }
@@ -197,6 +198,7 @@
       .sidebar-nav a:hover {
         background: var(--hover-bg);
         color: var(--primary-color);
+        border-radius: 8px;
       }
 
       .sidebar-nav a.active {
@@ -204,23 +206,25 @@
         color: var(--primary-color);
         border-left-color: var(--primary-color);
         font-weight: 500;
+        border-radius: 8px;
       }
 
       [data-theme="dark"] .sidebar-nav a.active {
         color: #60a5fa;
         border-left-color: #60a5fa;
+        border-radius: 8px;
       }
 
       .sidebar-nav .category-header {
         font-weight: 600;
         color: white;
-        padding: 10px 15px 5px;
-        font-size: 0.85rem;
+        padding: 12px 15px 8px;
+        font-size: 1rem;
       }
 
       .sidebar-nav .sub-link {
         padding-left: 30px;
-        font-size: 0.85rem;
+        font-size: 1rem;
       }
 
       .main-content {
@@ -260,7 +264,9 @@
 
       section p {
         color: var(--text-secondary);
-        margin-bottom: 15px;
+        margin-bottom: 18px;
+        font-size: 1rem;
+        line-height: 1.7;
       }
 
       table {
@@ -275,9 +281,10 @@
 
       th,
       td {
-        padding: 12px 15px;
+        padding: 14px 16px;
         text-align: left;
         border-bottom: 1px solid var(--border-color);
+        font-size: 1rem;
       }
 
       th {
@@ -303,8 +310,9 @@
         overflow-x: auto;
         margin: 15px 0;
         font-family: "Fira Code", monospace;
-        font-size: 0.85rem;
+        font-size: 0.95rem;
         border: 1px solid var(--border-color);
+        line-height: 1.6;
       }
 
       code {
@@ -315,10 +323,11 @@
       p code,
       td code {
         background: var(--inline-code-bg);
-        padding: 2px 8px;
+        padding: 4px 10px;
         border-radius: 4px;
         color: var(--primary-color);
-        font-size: 0.85rem;
+        font-size: 0.95rem;
+        font-weight: 500;
       }
 
       [data-theme="dark"] p code,
@@ -361,6 +370,25 @@
         color: white;
       }
 
+      .content-type {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 5px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: #8b5cf6;
+        color: white;
+      }
+
+      .content-type.multipart {
+        background: #059669;
+      }
+
+      .content-type.json {
+        background: #8b5cf6;
+      }
+
       .endpoint-card {
         background: var(--bg-color);
         border: 1px solid var(--border-color);
@@ -391,8 +419,9 @@
 
       .endpoint-description {
         color: var(--text-secondary);
-        font-size: 0.9rem;
-        margin-bottom: 15px;
+        font-size: 1rem;
+        margin-bottom: 18px;
+        line-height: 1.7;
       }
 
       .status {
@@ -435,9 +464,10 @@
       }
 
       .alert {
-        padding: 15px 20px;
+        padding: 16px 20px;
         border-radius: 8px;
-        margin: 15px 0;
+        margin: 18px 0;
+        font-size: 1rem;
       }
 
       .alert-info {
@@ -527,7 +557,7 @@
         text-align: center;
         padding: 25px 0;
         margin-top: 40px;
-        border-top: 1px solid var(--border-color);
+        font-size: 1rem;
         transition:
           background-color 0.3s ease,
           color 0.3s ease,
@@ -723,8 +753,44 @@
           </p>
           <h3>Base URL</h3>
           <pre><code>http://localhost:5000/api</code></pre>
-          <h3>Content Type</h3>
-          <pre><code>Content-Type: application/json</code></pre>
+          <h3>Content Types</h3>
+          <p>
+            The API supports multiple content types depending on the endpoint:
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Content Type</th>
+                <th>Usage</th>
+                <th>Endpoints</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="content-type json">application/json</span></td>
+                <td>Standard JSON requests</td>
+                <td>Auth, Banks, Transaction Updates</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="content-type multipart"
+                    >multipart/form-data</span
+                  >
+                </td>
+                <td>File uploads with form fields</td>
+                <td>Categories, Products, Transactions</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="content-type"
+                    >application/x-www-form-urlencoded</span
+                  >
+                </td>
+                <td>Simple form submissions</td>
+                <td>All endpoints (fallback)</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <hr class="section-divider" />
@@ -749,6 +815,7 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/auth/signin</span>
+              <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">Sign in to obtain a JWT token.</p>
             <h5>Request Body</h5>
@@ -777,6 +844,7 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/auth/initiate-admin-user</span>
+              <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">
               Create the initial admin user (only one admin allowed).
@@ -798,6 +866,11 @@
             <span class="category-icon">&#128193;</span>
             <h3 id="categories">Categories</h3>
           </div>
+
+          <p>
+            Category endpoints accept <strong>multipart/form-data</strong> for
+            create and update operations to support file uploads.
+          </p>
 
           <h4 id="cat-get-all">GET /api/categories</h4>
           <div class="endpoint-card">
@@ -857,6 +930,7 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/categories</span>
+              <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
               Create a new category (requires authentication).
@@ -888,15 +962,22 @@
                   <td><code>image</code></td>
                   <td>file</td>
                   <td>Yes</td>
-                  <td>Category image</td>
+                  <td>Category image file</td>
                 </tr>
               </tbody>
             </table>
+            <div class="alert alert-info">
+              <strong>Content-Type:</strong> Use
+              <code>multipart/form-data</code>
+              when sending with file upload. Include form fields and the file in
+              the same request.
+            </div>
             <h5>Response <span class="status status-201">201 Created</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439015",
   "name": "Tennis",
-  "description": "Tennis equipment"
+  "description": "Tennis equipment",
+  "imageUrl": "categories/abc123.png"
 }</code></pre>
           </div>
 
@@ -905,15 +986,48 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/categories/{id}</span>
+              <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
               Update a category (requires authentication).
             </p>
             <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>name</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Category name</td>
+                </tr>
+                <tr>
+                  <td><code>description</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Category description</td>
+                </tr>
+                <tr>
+                  <td><code>image</code></td>
+                  <td>file</td>
+                  <td>No</td>
+                  <td>New category image file</td>
+                </tr>
+              </tbody>
+            </table>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439011",
-  "name": "Updated Tennis"
+  "name": "Updated Tennis",
+  "description": "Updated description",
+  "imageUrl": "categories/newimage.png"
 }</code></pre>
           </div>
 
@@ -928,7 +1042,7 @@
             </p>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
-  "message": "Category deleted successfully"
+  "message": "Category and associated image deleted successfully"
 }</code></pre>
           </div>
 
@@ -937,6 +1051,11 @@
             <span class="category-icon">&#128230;</span>
             <h3 id="products">Products</h3>
           </div>
+
+          <p>
+            Product endpoints accept <strong>multipart/form-data</strong> for
+            create and update operations to support file uploads.
+          </p>
 
           <h4 id="prod-get-all">GET /api/products</h4>
           <div class="endpoint-card">
@@ -952,8 +1071,14 @@
   {
     "_id": "507f1f77bcf86cd799439012",
     "name": "Pro Dry Jersey Red",
+    "description": "High-quality dry fabric jersey",
     "stock": 50,
-    "price": 29.99
+    "price": 29.99,
+    "category": {
+      "_id": "507f1f77bcf86cd799439011",
+      "name": "Football"
+    },
+    "imageUrl": "/products/jersey.png"
   }
 ]</code></pre>
           </div>
@@ -987,7 +1112,14 @@
             <pre><code>{
   "_id": "507f1f77bcf86cd799439012",
   "name": "Official Basketball",
-  "price": 49.99
+  "description": "NBA official size basketball",
+  "stock": 25,
+  "price": 49.99,
+  "category": {
+    "_id": "507f1f77bcf86cd799439013",
+    "name": "Basketball"
+  },
+  "imageUrl": "/products/basketball.png"
 }</code></pre>
           </div>
 
@@ -996,10 +1128,12 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/products</span>
+              <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
               Create a new product (requires authentication).
             </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
             <table>
               <thead>
                 <tr>
@@ -1044,15 +1178,24 @@
                   <td><code>image</code></td>
                   <td>file</td>
                   <td>Yes</td>
-                  <td>Product image</td>
+                  <td>Product image file</td>
                 </tr>
               </tbody>
             </table>
+            <div class="alert alert-info">
+              <strong>Content-Type:</strong> Use
+              <code>multipart/form-data</code>
+              when sending with file upload.
+            </div>
             <h5>Response <span class="status status-201">201 Created</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439016",
   "name": "Ace Tennis Racket",
-  "price": 79.99
+  "description": "Professional grade tennis racket",
+  "price": 79.99,
+  "stock": 10,
+  "category": "507f1f77bcf86cd799439015",
+  "imageUrl": "products/racket.png"
 }</code></pre>
           </div>
 
@@ -1061,15 +1204,67 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/products/{id}</span>
+              <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
               Update a product (requires authentication).
             </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>name</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Product name</td>
+                </tr>
+                <tr>
+                  <td><code>description</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Product description</td>
+                </tr>
+                <tr>
+                  <td><code>stock</code></td>
+                  <td>number</td>
+                  <td>No</td>
+                  <td>Stock quantity</td>
+                </tr>
+                <tr>
+                  <td><code>price</code></td>
+                  <td>number</td>
+                  <td>No</td>
+                  <td>Product price</td>
+                </tr>
+                <tr>
+                  <td><code>category</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Category ObjectId</td>
+                </tr>
+                <tr>
+                  <td><code>image</code></td>
+                  <td>file</td>
+                  <td>No</td>
+                  <td>New product image file</td>
+                </tr>
+              </tbody>
+            </table>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439016",
   "name": "Updated Racket",
-  "price": 69.99
+  "price": 69.99,
+  "stock": 15,
+  "imageUrl": "products/updated.png"
 }</code></pre>
           </div>
 
@@ -1084,7 +1279,7 @@
             </p>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
-  "message": "Product deleted successfully"
+  "message": "Product and associated image deleted successfully"
 }</code></pre>
           </div>
 
@@ -1093,6 +1288,11 @@
             <span class="category-icon">&#127974;</span>
             <h3 id="banks">Banks</h3>
           </div>
+
+          <p>
+            Bank endpoints accept <strong>application/json</strong> for create
+            and update operations (no file uploads).
+          </p>
 
           <h4 id="bank-get-all">GET /api/banks</h4>
           <div class="endpoint-card">
@@ -1109,7 +1309,7 @@
     "_id": "507f1f77bcf86cd799439018",
     "bankName": "BCA",
     "accountName": "PT Sporton",
-    "accountNumber": "1234567890"
+    "accountNumber": 1234567890
   }
 ]</code></pre>
           </div>
@@ -1127,7 +1327,8 @@
             <pre><code>{
   "_id": "507f1f77bcf86cd799439018",
   "bankName": "BCA",
-  "accountName": "PT Sporton"
+  "accountName": "PT Sporton",
+  "accountNumber": 1234567890
 }</code></pre>
           </div>
 
@@ -1136,10 +1337,12 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/banks</span>
+              <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">
               Create a new bank account (requires authentication).
             </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
             <h5>Request Body</h5>
             <pre><code>{
   "bankName": "BNI",
@@ -1149,7 +1352,9 @@
             <h5>Response <span class="status status-201">201 Created</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439020",
-  "bankName": "BNI"
+  "bankName": "BNI",
+  "accountName": "PT Sporton",
+  "accountNumber": 1122334455
 }</code></pre>
           </div>
 
@@ -1158,11 +1363,21 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/banks/{id}</span>
+              <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">Update a bank account.</p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+            <h5>Request Body</h5>
+            <pre><code>{
+  "bankName": "Updated BNI",
+  "accountNumber": "9988776655"
+}</code></pre>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
-  "bankName": "Updated BNI"
+  "_id": "507f1f77bcf86cd799439020",
+  "bankName": "Updated BNI",
+  "accountName": "PT Sporton",
+  "accountNumber": 9988776655
 }</code></pre>
           </div>
 
@@ -1185,11 +1400,17 @@
             <h3 id="transactions">Transactions</h3>
           </div>
 
+          <p>
+            Transaction checkout accepts <strong>multipart/form-data</strong>
+            for payment proof file upload. Other endpoints use JSON.
+          </p>
+
           <h4 id="tx-create">POST /api/transactions/checkout</h4>
           <div class="endpoint-card">
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/transactions/checkout</span>
+              <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
               Create a new transaction (requires authentication).
@@ -1206,15 +1427,15 @@
               <tbody>
                 <tr>
                   <td><code>purchasedItems</code></td>
-                  <td>JSON</td>
+                  <td>JSON string</td>
                   <td>Yes</td>
                   <td>Array of {productId, qty}</td>
                 </tr>
                 <tr>
                   <td><code>totalPayment</code></td>
-                  <td>number</td>
+                  <td>string/number</td>
                   <td>Yes</td>
-                  <td>Total payment</td>
+                  <td>Total payment amount</td>
                 </tr>
                 <tr>
                   <td><code>customerName</code></td>
@@ -1238,15 +1459,29 @@
                   <td><code>image</code></td>
                   <td>file</td>
                   <td>Yes</td>
-                  <td>Payment proof</td>
+                  <td>Payment proof image file</td>
                 </tr>
               </tbody>
             </table>
+            <div class="alert alert-info">
+              <strong>Note:</strong> When using multipart/form-data,
+              <code>purchasedItems</code> must be sent as a JSON string.
+            </div>
             <h5>Response <span class="status status-201">201 Created</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439021",
-  "status": "pending",
-  "totalPayment": 149.97
+  "purchasedItems": [
+    {
+      "productId": "507f1f77bcf86cd799439012",
+      "qty": 2
+    }
+  ],
+  "totalPayment": 149.97,
+  "customerName": "John Doe",
+  "customerContact": "+62812345678",
+  "customerAddress": "Jakarta, Indonesia",
+  "paymentProof": "transactions/payment123.png",
+  "status": "pending"
 }</code></pre>
           </div>
 
@@ -1259,12 +1494,24 @@
             <p class="endpoint-description">
               Retrieve all transactions (requires authentication).
             </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>[
   {
     "_id": "507f1f77bcf86cd799439021",
+    "purchasedItems": [
+      {
+        "productId": {
+          "_id": "507f1f77bcf86cd799439012",
+          "name": "Official Basketball",
+          "price": 49.99
+        },
+        "qty": 1
+      }
+    ],
+    "totalPayment": 149.97,
     "status": "pending",
-    "totalPayment": 149.97
+    "customerName": "John Doe"
   }
 ]</code></pre>
           </div>
@@ -1276,11 +1523,23 @@
               <span class="endpoint-path">/api/transactions/{id}</span>
             </div>
             <p class="endpoint-description">Retrieve a specific transaction.</p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439021",
+  "purchasedItems": [
+    {
+      "productId": {
+        "_id": "507f1f77bcf86cd799439012",
+        "name": "Official Basketball"
+      },
+      "qty": 2
+    }
+  ],
+  "totalPayment": 59.98,
   "status": "paid",
-  "totalPayment": 59.98
+  "customerName": "Jane Doe",
+  "paymentProof": "transactions/payment456.png"
 }</code></pre>
           </div>
 
@@ -1289,10 +1548,12 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/transactions/{id}</span>
+              <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">
               Update transaction status (requires authentication).
             </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
             <h5>Request Body</h5>
             <pre><code>{
   "status": "paid"
@@ -1323,7 +1584,8 @@
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439021",
-  "status": "paid"
+  "status": "paid",
+  "updatedAt": "2024-02-05T10:30:00.000Z"
 }</code></pre>
           </div>
         </section>
@@ -1340,19 +1602,80 @@ paths:
   /auth/signin:
     post:
       summary: Sign in user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
   /categories:
     get:
       summary: Get all categories
     post:
       summary: Create category
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
   /products:
     get:
       summary: Get all products
     post:
       summary: Create product
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                stock:
+                  type: number
+                price:
+                  type: number
+                category:
+                  type: string
+                image:
+                  type: string
+                  format: binary
   /transactions/checkout:
     post:
       summary: Create transaction
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                purchasedItems:
+                  type: string
+                totalPayment:
+                  type: number
+                customerName:
+                  type: string
+                customerContact:
+                  type: string
+                customerAddress:
+                  type: string
+                image:
+                  type: string
+                  format: binary
 components:
   securitySchemes:
     bearerAuth:
@@ -1377,7 +1700,27 @@ components:
               <tr>
                 <td><strong>400</strong></td>
                 <td>Bad Request</td>
-                <td>Invalid request format</td>
+                <td>Invalid request format or missing required fields</td>
+              </tr>
+              <tr>
+                <td><strong>400</strong></td>
+                <td>Bad Request</td>
+                <td>Invalid format for purchasedItems</td>
+              </tr>
+              <tr>
+                <td><strong>400</strong></td>
+                <td>Bad Request</td>
+                <td>Payment proof is required!</td>
+              </tr>
+              <tr>
+                <td><strong>400</strong></td>
+                <td>Bad Request</td>
+                <td>Invalid Category/Product ID format</td>
+              </tr>
+              <tr>
+                <td><strong>400</strong></td>
+                <td>Bad Request</td>
+                <td>All fields are required</td>
               </tr>
               <tr>
                 <td><strong>401</strong></td>
@@ -1393,6 +1736,11 @@ components:
                 <td><strong>404</strong></td>
                 <td>Not Found</td>
                 <td>Resource does not exist</td>
+              </tr>
+              <tr>
+                <td><strong>404</strong></td>
+                <td>Not Found</td>
+                <td>Category/Product/Bank/Transaction not found</td>
               </tr>
               <tr>
                 <td><strong>500</strong></td>
@@ -1428,12 +1776,12 @@ components:
 
         if (html.getAttribute("data-theme") === "dark") {
           html.setAttribute("data-theme", "light");
-          themeIcon.innerHTML = "&#127769;";
+          themeIcon.innerHTML = "&#9788;";
           themeText.textContent = "Dark";
           localStorage.setItem("theme", "light");
         } else {
           html.setAttribute("data-theme", "dark");
-          themeIcon.innerHTML = "&#127774;";
+          themeIcon.innerHTML = "&#9789;";
           themeText.textContent = "Light";
           localStorage.setItem("theme", "dark");
         }
