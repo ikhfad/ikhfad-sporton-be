@@ -12,7 +12,7 @@ export const createCategory = async (
     const categoryData = { ...req.body };
 
     if (req.file) {
-      categoryData.imageUrl = `/categories/${req.file.filename}`;
+      categoryData.imageUrl = `categories/${req.file.filename}`;
     }
 
     const category = new Category(categoryData);
@@ -90,7 +90,7 @@ export const updateCategory = async (
 
     if (req.file) {
       oldImageRelativePath = existingCategory.imageUrl;
-      categoryData.imageUrl = `/categories/${req.file.filename}`;
+      categoryData.imageUrl = `categories/${req.file.filename}`;
     }
 
     const updatedCategory = await Category.findByIdAndUpdate(id, categoryData, {

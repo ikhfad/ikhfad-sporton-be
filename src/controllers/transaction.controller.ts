@@ -12,7 +12,7 @@ export const createTransaction = async (
     const transactionData = { ...req.body };
 
     if (req.file) {
-      transactionData.paymentProof = `/transactions/${req.file.filename}`;
+      transactionData.paymentProof = `transactions/${req.file.filename}`;
     } else {
       res.status(400).json({ message: "Payment proof is required!" });
       return;

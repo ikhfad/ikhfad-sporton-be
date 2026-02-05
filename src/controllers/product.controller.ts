@@ -12,7 +12,7 @@ export const createProduct = async (
     const productData = req.body;
 
     if (req.file) {
-      productData.imageUrl = `/products/${req.file.filename}`;
+      productData.imageUrl = `products/${req.file.filename}`;
     }
 
     const product = new Product(productData);
@@ -94,7 +94,7 @@ export const updateProduct = async (
 
     if (req.file) {
       oldImageRelativePath = existingProduct.imageUrl;
-      productData.imageUrl = `/products/${req.file.filename}`;
+      productData.imageUrl = `products/${req.file.filename}`;
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(id, productData, {
