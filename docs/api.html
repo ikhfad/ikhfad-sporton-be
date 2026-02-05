@@ -751,8 +751,12 @@
             products, categories, banking information, and customer
             transactions.
           </p>
-          <h3>Base URL</h3>
-          <pre><code>http://localhost:5000/api</code></pre>
+          <h3>Base URL Local Development</h3>
+          <pre><code id="local-api">http://localhost:5000/api</code></pre>
+          <h3>Base URL Local Development With DDEV</h3>
+          <pre><code id="ddev-api">https://ikhfad-sporton-be.ddev.site/api</code></pre>
+          <h3>Base URL Production</h3>
+          <pre><code id="prod-api">https://ikhfad-sporton-be-production.up.railway.app/api</code></pre>
           <h3>Content Types</h3>
           <p>
             The API supports multiple content types depending on the endpoint:
@@ -1768,6 +1772,42 @@ components:
     </footer>
 
     <script>
+      (function () {
+        const hostname = window.location.hostname;
+        const origin = window.location.origin;
+        const protocol = window.location.protocol;
+
+        let apiLocal = "Not in local server environment";
+        let apiDdev = "Not in local DDEV server environment";
+        let apiProduction = "Not in production server environment";
+
+        if (protocol === "file:") {
+          apiLocal = "File opened locally";
+          apiDdev = "File opened locally";
+          apiProduction = "Not in server environment";
+        }
+
+        if (hostname === "localhost" || hostname === "127.0.0.1") {
+          apiLocal = `${origin}/api`;
+        }
+
+        if (hostname.includes(".ddev.site")) {
+          apiDdev = `${origin}/api`;
+        }
+
+        if (
+          !hostname.includes("localhost") &&
+          !hostname.includes(".ddev.site") &&
+          hostname.includes(".")
+        ) {
+          apiProduction = `${origin}/api`;
+        }
+
+        document.getElementById("local-api").innerText = apiLocal;
+        document.getElementById("ddev-api").innerText = apiDdev;
+        document.getElementById("prod-api").innerText = apiProduction;
+      })();
+
       function toggleTheme() {
         const html = document.documentElement;
         const toggleBtn = document.querySelector(".theme-toggle");
