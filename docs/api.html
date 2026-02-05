@@ -1,0 +1,1504 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sporton Backend API Documentation</title>
+    <style>
+      :root {
+        --primary-color: #2563eb;
+        --secondary-color: #1e40af;
+        --accent-color: #3b82f6;
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --error-color: #ef4444;
+        --code-bg: #1e293b;
+        --code-text: #e2e8f0;
+        --sidebar-width: 280px;
+        --sidebar-bg: #ffffff;
+        --hover-bg: #f1f5f9;
+        --active-bg: #eff6ff;
+        --shadow-color: rgba(0, 0, 0, 0.05);
+        --alert-bg-info: #eff6ff;
+        --alert-text-info: #1e40af;
+        --alert-bg-warning: #fffbeb;
+        --alert-text-warning: #92400e;
+        --alert-bg-error: #fef2f2;
+        --alert-text-error: #991b1b;
+        --alert-bg-success: #f0fdf4;
+        --alert-text-success: #065f46;
+        --table-hover: #f8fafc;
+        --inline-code-bg: #f1f5f9;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border-color: #334155;
+        --code-bg: #0f172a;
+        --code-text: #e2e8f0;
+        --sidebar-bg: #1e293b;
+        --hover-bg: #334155;
+        --active-bg: #3b82f6;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        --alert-bg-info: #1e3a5f;
+        --alert-text-info: #60a5fa;
+        --alert-bg-warning: #422006;
+        --alert-text-warning: #fbbf24;
+        --alert-bg-error: #450a0a;
+        --alert-text-error: #f87171;
+        --alert-bg-success: #064e3b;
+        --alert-text-success: #34d399;
+        --table-hover: #1e293b;
+        --inline-code-bg: #334155;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        line-height: 1.6;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+      }
+
+      header p {
+        font-size: 1rem;
+        opacity: 0.9;
+      }
+
+      .version-badge {
+        display: inline-block;
+        background: rgba(37, 99, 235, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-top: 10px;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        z-index: 1001;
+        box-shadow: 0 3px 4px rgba(37, 99, 235, 0.4);
+      }
+
+      .theme-toggle:hover {
+        background: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.5);
+      }
+
+      [data-theme="light"] .theme-toggle {
+        background: #1e40af;
+        box-shadow: 0 3px 4px rgba(30, 64, 175, 0.3);
+      }
+
+      [data-theme="light"] .theme-toggle:hover {
+        background: #1e3a8a;
+        box-shadow: 0 6px 8px rgba(30, 64, 175, 0.4);
+      }
+
+      .docs-layout {
+        display: flex;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .sidebar {
+        width: var(--sidebar-width);
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border-color);
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        overflow-y: auto;
+        padding: 20px 0;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      .sidebar-section {
+        padding: 10px 20px;
+      }
+
+      .sidebar-title {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .sidebar-nav {
+        list-style: none;
+      }
+
+      .sidebar-nav li {
+        margin-bottom: 2px;
+      }
+
+      .sidebar-nav a {
+        display: block;
+        padding: 8px 15px;
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease;
+      }
+
+      .sidebar-nav a:hover {
+        background: var(--hover-bg);
+        color: var(--primary-color);
+      }
+
+      .sidebar-nav a.active {
+        background: var(--active-bg);
+        color: var(--primary-color);
+        border-left-color: var(--primary-color);
+        font-weight: 500;
+      }
+
+      [data-theme="dark"] .sidebar-nav a.active {
+        color: #60a5fa;
+        border-left-color: #60a5fa;
+      }
+
+      .sidebar-nav .category-header {
+        font-weight: 600;
+        color: white;
+        padding: 10px 15px 5px;
+        font-size: 0.85rem;
+      }
+
+      .sidebar-nav .sub-link {
+        padding-left: 30px;
+        font-size: 0.85rem;
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 30px 40px;
+        max-width: calc(100% - var(--sidebar-width));
+      }
+
+      section {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px var(--shadow-color);
+        transition:
+          background-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      section h2 {
+        color: var(--primary-color);
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      [data-theme="dark"] section h2 {
+        color: #60a5fa;
+      }
+
+      section h3 {
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        margin: 25px 0 15px;
+      }
+
+      section p {
+        color: var(--text-secondary);
+        margin-bottom: 15px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        background: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background: var(--primary-color);
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      tr:hover {
+        background: var(--table-hover);
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      pre {
+        background: var(--code-bg);
+        color: var(--code-text);
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+        font-family: "Fira Code", monospace;
+        font-size: 0.85rem;
+        border: 1px solid var(--border-color);
+      }
+
+      code {
+        font-family: "Fira Code", monospace;
+        font-size: 0.9em;
+      }
+
+      p code,
+      td code {
+        background: var(--inline-code-bg);
+        padding: 2px 8px;
+        border-radius: 4px;
+        color: var(--primary-color);
+        font-size: 0.85rem;
+      }
+
+      [data-theme="dark"] p code,
+      [data-theme="dark"] td code {
+        color: #60a5fa;
+      }
+
+      .method {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 5px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .method-get {
+        background: #059669;
+        color: white;
+      }
+
+      .method-post {
+        background: #2563eb;
+        color: white;
+      }
+
+      .method-patch {
+        background: #d97706;
+        color: white;
+      }
+
+      .method-delete {
+        background: #dc2626;
+        color: white;
+      }
+
+      .method-put {
+        background: #7c3aed;
+        color: white;
+      }
+
+      .endpoint-card {
+        background: var(--bg-color);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      .endpoint-card:hover {
+        box-shadow: 0 4px 15px var(--shadow-color);
+      }
+
+      .endpoint-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .endpoint-path {
+        font-family: "Fira Code", monospace;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        flex: 1;
+      }
+
+      .endpoint-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .status-200 {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-201 {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .status-400 {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-401 {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-404 {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-500 {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+
+      .alert-info {
+        background: var(--alert-bg-info);
+        color: var(--alert-text-info);
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .alert-warning {
+        background: var(--alert-bg-warning);
+        color: var(--alert-text-warning);
+        border-left: 4px solid var(--warning-color);
+      }
+
+      .alert-error {
+        background: var(--alert-bg-error);
+        color: var(--alert-text-error);
+        border-left: 4px solid var(--error-color);
+      }
+
+      .alert-success {
+        background: var(--alert-bg-success);
+        color: var(--alert-text-success);
+        border-left: 4px solid var(--success-color);
+      }
+
+      .category-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin: 30px 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .category-header h3 {
+        color: white;
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .category-icon {
+        font-size: 1.3rem;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--primary-color);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+        border: none;
+        cursor: pointer;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-5px);
+        background: var(--secondary-color);
+      }
+
+      footer {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        text-align: center;
+        padding: 25px 0;
+        margin-top: 40px;
+        border-top: 1px solid var(--border-color);
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      footer a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      .section-divider {
+        border: none;
+        border-top: 2px dashed var(--border-color);
+        margin: 30px 0;
+      }
+
+      @media (max-width: 1024px) {
+        .sidebar {
+          display: none;
+        }
+
+        .main-content {
+          max-width: 100%;
+          padding: 20px;
+          margin-top: 70px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 15px;
+        }
+
+        header h1 {
+          font-size: 1.3rem;
+        }
+
+        .main-content {
+          padding: 15px;
+          margin-top: 60px;
+        }
+
+        section {
+          padding: 20px 15px;
+        }
+
+        section h2 {
+          font-size: 1.4rem;
+        }
+
+        section h3 {
+          font-size: 1.1rem;
+        }
+
+        .endpoint-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        table {
+          font-size: 0.85rem;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+
+        pre {
+          font-size: 0.8rem;
+          padding: 15px;
+        }
+
+        .back-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 45px;
+          height: 45px;
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header id="top">
+      <h1>Sporton Backend API</h1>
+      <p>E-commerce API for Sports Equipment Retail</p>
+      <span class="version-badge">Version 1.0.0</span>
+    </header>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="theme-icon">&#9789;</span>
+      <span class="theme-text">Light</span>
+    </button>
+
+    <div class="docs-layout">
+      <nav class="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Documentation</div>
+          <ul class="sidebar-nav">
+            <li><a href="#overview" class="nav-link">Overview</a></li>
+            <li><a href="#endpoints" class="nav-link">API Endpoints</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">API Endpoints</div>
+          <ul class="sidebar-nav">
+            <li class="category-header">Authentication</li>
+            <li>
+              <a href="#auth-signin" class="nav-link sub-link">POST Sign In</a>
+            </li>
+            <li>
+              <a href="#auth-init-admin" class="nav-link sub-link"
+                >POST Init Admin</a
+              >
+            </li>
+            <li class="category-header">Categories</li>
+            <li>
+              <a href="#cat-get-all" class="nav-link sub-link">GET All</a>
+            </li>
+            <li>
+              <a href="#cat-get-one" class="nav-link sub-link">GET One</a>
+            </li>
+            <li>
+              <a href="#cat-create" class="nav-link sub-link">POST Create</a>
+            </li>
+            <li>
+              <a href="#cat-update" class="nav-link sub-link">PATCH Update</a>
+            </li>
+            <li>
+              <a href="#cat-delete" class="nav-link sub-link">DELETE Delete</a>
+            </li>
+            <li class="category-header">Products</li>
+            <li>
+              <a href="#prod-get-all" class="nav-link sub-link">GET All</a>
+            </li>
+            <li>
+              <a href="#prod-get-one" class="nav-link sub-link">GET One</a>
+            </li>
+            <li>
+              <a href="#prod-create" class="nav-link sub-link">POST Create</a>
+            </li>
+            <li>
+              <a href="#prod-update" class="nav-link sub-link">PATCH Update</a>
+            </li>
+            <li>
+              <a href="#prod-delete" class="nav-link sub-link">DELETE Delete</a>
+            </li>
+            <li class="category-header">Banks</li>
+            <li>
+              <a href="#bank-get-all" class="nav-link sub-link">GET All</a>
+            </li>
+            <li>
+              <a href="#bank-get-one" class="nav-link sub-link">GET One</a>
+            </li>
+            <li>
+              <a href="#bank-create" class="nav-link sub-link">POST Create</a>
+            </li>
+            <li>
+              <a href="#bank-update" class="nav-link sub-link">PATCH Update</a>
+            </li>
+            <li>
+              <a href="#bank-delete" class="nav-link sub-link">DELETE Delete</a>
+            </li>
+            <li class="category-header">Transactions</li>
+            <li>
+              <a href="#tx-create" class="nav-link sub-link">POST Checkout</a>
+            </li>
+            <li><a href="#tx-get-all" class="nav-link sub-link">GET All</a></li>
+            <li><a href="#tx-get-one" class="nav-link sub-link">GET One</a></li>
+            <li>
+              <a href="#tx-update" class="nav-link sub-link">PATCH Update</a>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">Reference</div>
+          <ul class="sidebar-nav">
+            <li><a href="#openapi" class="nav-link">OpenAPI Spec</a></li>
+            <li><a href="#errors" class="nav-link">Error Reference</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <section id="overview">
+          <h2>1. Overview</h2>
+          <h3>Purpose</h3>
+          <p>
+            The Sporton Backend API provides a comprehensive e-commerce solution
+            for sports equipment retail. It offers endpoints for managing
+            products, categories, banking information, and customer
+            transactions.
+          </p>
+          <h3>Base URL</h3>
+          <pre><code>http://localhost:5000/api</code></pre>
+          <h3>Content Type</h3>
+          <pre><code>Content-Type: application/json</code></pre>
+        </section>
+
+        <hr class="section-divider" />
+
+        <section id="endpoints">
+          <h2>2. API Endpoints</h2>
+
+          <!-- Authentication -->
+          <div class="category-header">
+            <span class="category-icon">&#128274;</span>
+            <h3 id="authentication">Authentication</h3>
+          </div>
+
+          <p>
+            The Sporton API uses
+            <strong>JSON Web Token (JWT)</strong> authentication. Write
+            operations require a valid JWT token.
+          </p>
+
+          <h4 id="auth-signin">POST /api/auth/signin</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/auth/signin</span>
+            </div>
+            <p class="endpoint-description">Sign in to obtain a JWT token.</p>
+            <h5>Request Body</h5>
+            <pre><code>{
+  "email": "admin@example.com",
+  "password": "your-secure-password"
+}</code></pre>
+            <h5>Response <span class="status status-201">201 Created</span></h5>
+            <pre><code>{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "507f1f77bcf86cd799439011",
+    "name": "Admin User",
+    "email": "admin@example.com"
+  }
+}</code></pre>
+            <h5>Using the Token</h5>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+            <div class="alert alert-warning">
+              <strong>Token Expiration:</strong> Tokens expire after 24 hours.
+            </div>
+          </div>
+
+          <h4 id="auth-init-admin">POST /api/auth/initiate-admin-user</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/auth/initiate-admin-user</span>
+            </div>
+            <p class="endpoint-description">
+              Create the initial admin user (only one admin allowed).
+            </p>
+            <h5>Request Body</h5>
+            <pre><code>{
+  "name": "Admin Name",
+  "email": "admin@example.com",
+  "password": "secure-password"
+}</code></pre>
+            <h5>Response <span class="status status-201">201 Created</span></h5>
+            <pre><code>{
+  "message": "Admin user created successfully!"
+}</code></pre>
+          </div>
+
+          <!-- Categories -->
+          <div class="category-header">
+            <span class="category-icon">&#128193;</span>
+            <h3 id="categories">Categories</h3>
+          </div>
+
+          <h4 id="cat-get-all">GET /api/categories</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/categories</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve all categories (public endpoint).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>[
+  {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "Football",
+    "description": "Football equipment",
+    "imageUrl": "/categories/football.png"
+  }
+]</code></pre>
+          </div>
+
+          <h4 id="cat-get-one">GET /api/categories/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/categories/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve a specific category by ID.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>id</code></td>
+                  <td>string</td>
+                  <td>Category's MongoDB ObjectId</td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439011",
+  "name": "Football",
+  "description": "Football equipment"
+}</code></pre>
+          </div>
+
+          <h4 id="cat-create">POST /api/categories</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/categories</span>
+            </div>
+            <p class="endpoint-description">
+              Create a new category (requires authentication).
+            </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>name</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Category name</td>
+                </tr>
+                <tr>
+                  <td><code>description</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Category description</td>
+                </tr>
+                <tr>
+                  <td><code>image</code></td>
+                  <td>file</td>
+                  <td>Yes</td>
+                  <td>Category image</td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Response <span class="status status-201">201 Created</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439015",
+  "name": "Tennis",
+  "description": "Tennis equipment"
+}</code></pre>
+          </div>
+
+          <h4 id="cat-update">PATCH /api/categories/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-patch">PATCH</span>
+              <span class="endpoint-path">/api/categories/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Update a category (requires authentication).
+            </p>
+            <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439011",
+  "name": "Updated Tennis"
+}</code></pre>
+          </div>
+
+          <h4 id="cat-delete">DELETE /api/categories/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-delete">DELETE</span>
+              <span class="endpoint-path">/api/categories/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Delete a category (requires authentication).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "message": "Category deleted successfully"
+}</code></pre>
+          </div>
+
+          <!-- Products -->
+          <div class="category-header">
+            <span class="category-icon">&#128230;</span>
+            <h3 id="products">Products</h3>
+          </div>
+
+          <h4 id="prod-get-all">GET /api/products</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/products</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve all products (public endpoint).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>[
+  {
+    "_id": "507f1f77bcf86cd799439012",
+    "name": "Pro Dry Jersey Red",
+    "stock": 50,
+    "price": 29.99
+  }
+]</code></pre>
+          </div>
+
+          <h4 id="prod-get-one">GET /api/products/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/products/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve a specific product by ID.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>id</code></td>
+                  <td>string</td>
+                  <td>Product's MongoDB ObjectId</td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439012",
+  "name": "Official Basketball",
+  "price": 49.99
+}</code></pre>
+          </div>
+
+          <h4 id="prod-create">POST /api/products</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/products</span>
+            </div>
+            <p class="endpoint-description">
+              Create a new product (requires authentication).
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>name</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Product name</td>
+                </tr>
+                <tr>
+                  <td><code>description</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Product description</td>
+                </tr>
+                <tr>
+                  <td><code>stock</code></td>
+                  <td>number</td>
+                  <td>Yes</td>
+                  <td>Stock quantity</td>
+                </tr>
+                <tr>
+                  <td><code>price</code></td>
+                  <td>number</td>
+                  <td>Yes</td>
+                  <td>Product price</td>
+                </tr>
+                <tr>
+                  <td><code>category</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Category ObjectId</td>
+                </tr>
+                <tr>
+                  <td><code>image</code></td>
+                  <td>file</td>
+                  <td>Yes</td>
+                  <td>Product image</td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Response <span class="status status-201">201 Created</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439016",
+  "name": "Ace Tennis Racket",
+  "price": 79.99
+}</code></pre>
+          </div>
+
+          <h4 id="prod-update">PATCH /api/products/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-patch">PATCH</span>
+              <span class="endpoint-path">/api/products/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Update a product (requires authentication).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439016",
+  "name": "Updated Racket",
+  "price": 69.99
+}</code></pre>
+          </div>
+
+          <h4 id="prod-delete">DELETE /api/products/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-delete">DELETE</span>
+              <span class="endpoint-path">/api/products/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Delete a product (requires authentication).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "message": "Product deleted successfully"
+}</code></pre>
+          </div>
+
+          <!-- Banks -->
+          <div class="category-header">
+            <span class="category-icon">&#127974;</span>
+            <h3 id="banks">Banks</h3>
+          </div>
+
+          <h4 id="bank-get-all">GET /api/banks</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/banks</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve all bank accounts (public endpoint).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>[
+  {
+    "_id": "507f1f77bcf86cd799439018",
+    "bankName": "BCA",
+    "accountName": "PT Sporton",
+    "accountNumber": "1234567890"
+  }
+]</code></pre>
+          </div>
+
+          <h4 id="bank-get-one">GET /api/banks/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/banks/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve a specific bank account.
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439018",
+  "bankName": "BCA",
+  "accountName": "PT Sporton"
+}</code></pre>
+          </div>
+
+          <h4 id="bank-create">POST /api/banks</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/banks</span>
+            </div>
+            <p class="endpoint-description">
+              Create a new bank account (requires authentication).
+            </p>
+            <h5>Request Body</h5>
+            <pre><code>{
+  "bankName": "BNI",
+  "accountName": "PT Sporton",
+  "accountNumber": "1122334455"
+}</code></pre>
+            <h5>Response <span class="status status-201">201 Created</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439020",
+  "bankName": "BNI"
+}</code></pre>
+          </div>
+
+          <h4 id="bank-update">PATCH /api/banks/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-patch">PATCH</span>
+              <span class="endpoint-path">/api/banks/{id}</span>
+            </div>
+            <p class="endpoint-description">Update a bank account.</p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "bankName": "Updated BNI"
+}</code></pre>
+          </div>
+
+          <h4 id="bank-delete">DELETE /api/banks/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-delete">DELETE</span>
+              <span class="endpoint-path">/api/banks/{id}</span>
+            </div>
+            <p class="endpoint-description">Delete a bank account.</p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "message": "Bank deleted successfully"
+}</code></pre>
+          </div>
+
+          <!-- Transactions -->
+          <div class="category-header">
+            <span class="category-icon">&#128179;</span>
+            <h3 id="transactions">Transactions</h3>
+          </div>
+
+          <h4 id="tx-create">POST /api/transactions/checkout</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-post">POST</span>
+              <span class="endpoint-path">/api/transactions/checkout</span>
+            </div>
+            <p class="endpoint-description">
+              Create a new transaction (requires authentication).
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>purchasedItems</code></td>
+                  <td>JSON</td>
+                  <td>Yes</td>
+                  <td>Array of {productId, qty}</td>
+                </tr>
+                <tr>
+                  <td><code>totalPayment</code></td>
+                  <td>number</td>
+                  <td>Yes</td>
+                  <td>Total payment</td>
+                </tr>
+                <tr>
+                  <td><code>customerName</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Customer name</td>
+                </tr>
+                <tr>
+                  <td><code>customerContact</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Phone/email</td>
+                </tr>
+                <tr>
+                  <td><code>customerAddress</code></td>
+                  <td>string</td>
+                  <td>Yes</td>
+                  <td>Delivery address</td>
+                </tr>
+                <tr>
+                  <td><code>image</code></td>
+                  <td>file</td>
+                  <td>Yes</td>
+                  <td>Payment proof</td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Response <span class="status status-201">201 Created</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439021",
+  "status": "pending",
+  "totalPayment": 149.97
+}</code></pre>
+          </div>
+
+          <h4 id="tx-get-all">GET /api/transactions</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/transactions</span>
+            </div>
+            <p class="endpoint-description">
+              Retrieve all transactions (requires authentication).
+            </p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>[
+  {
+    "_id": "507f1f77bcf86cd799439021",
+    "status": "pending",
+    "totalPayment": 149.97
+  }
+]</code></pre>
+          </div>
+
+          <h4 id="tx-get-one">GET /api/transactions/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-get">GET</span>
+              <span class="endpoint-path">/api/transactions/{id}</span>
+            </div>
+            <p class="endpoint-description">Retrieve a specific transaction.</p>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439021",
+  "status": "paid",
+  "totalPayment": 59.98
+}</code></pre>
+          </div>
+
+          <h4 id="tx-update">PATCH /api/transactions/:id</h4>
+          <div class="endpoint-card">
+            <div class="endpoint-header">
+              <span class="method method-patch">PATCH</span>
+              <span class="endpoint-path">/api/transactions/{id}</span>
+            </div>
+            <p class="endpoint-description">
+              Update transaction status (requires authentication).
+            </p>
+            <h5>Request Body</h5>
+            <pre><code>{
+  "status": "paid"
+}</code></pre>
+            <h5>Valid Status Values</h5>
+            <table>
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>pending</code></td>
+                  <td>Payment awaiting verification</td>
+                </tr>
+                <tr>
+                  <td><code>paid</code></td>
+                  <td>Payment confirmed - deducts stock</td>
+                </tr>
+                <tr>
+                  <td><code>rejected</code></td>
+                  <td>Payment rejected - restocks items</td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Response <span class="status status-200">200 OK</span></h5>
+            <pre><code>{
+  "_id": "507f1f77bcf86cd799439021",
+  "status": "paid"
+}</code></pre>
+          </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <section id="openapi">
+          <h2>3. OpenAPI/Swagger Specification</h2>
+          <pre><code>openapi: 3.0.0
+info:
+  title: Sporton Backend API
+  version: 1.0.0
+paths:
+  /auth/signin:
+    post:
+      summary: Sign in user
+  /categories:
+    get:
+      summary: Get all categories
+    post:
+      summary: Create category
+  /products:
+    get:
+      summary: Get all products
+    post:
+      summary: Create product
+  /transactions/checkout:
+    post:
+      summary: Create transaction
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT</code></pre>
+        </section>
+
+        <hr class="section-divider" />
+
+        <section id="errors">
+          <h2>4. Error Reference</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>HTTP Code</th>
+                <th>Error Type</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>400</strong></td>
+                <td>Bad Request</td>
+                <td>Invalid request format</td>
+              </tr>
+              <tr>
+                <td><strong>401</strong></td>
+                <td>Unauthorized</td>
+                <td>Authentication Required!</td>
+              </tr>
+              <tr>
+                <td><strong>401</strong></td>
+                <td>Unauthorized</td>
+                <td>Invalid Token!</td>
+              </tr>
+              <tr>
+                <td><strong>404</strong></td>
+                <td>Not Found</td>
+                <td>Resource does not exist</td>
+              </tr>
+              <tr>
+                <td><strong>500</strong></td>
+                <td>Internal Server Error</td>
+                <td>Server-side error</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <button class="back-to-top" onclick="scrollToTop()" title="Back to top">
+      &#8593;
+    </button>
+
+    <footer>
+      <p>Last updated: February 2024 | API Version: 1.0.0</p>
+      <p>
+        Questions? Contact
+        <a href="mailto:support@sporton.example.com"
+          >support@sporton.example.com</a
+        >
+      </p>
+    </footer>
+
+    <script>
+      function toggleTheme() {
+        const html = document.documentElement;
+        const toggleBtn = document.querySelector(".theme-toggle");
+        const themeIcon = toggleBtn.querySelector(".theme-icon");
+        const themeText = toggleBtn.querySelector(".theme-text");
+
+        if (html.getAttribute("data-theme") === "dark") {
+          html.setAttribute("data-theme", "light");
+          themeIcon.innerHTML = "&#127769;";
+          themeText.textContent = "Dark";
+          localStorage.setItem("theme", "light");
+        } else {
+          html.setAttribute("data-theme", "dark");
+          themeIcon.innerHTML = "&#127774;";
+          themeText.textContent = "Light";
+          localStorage.setItem("theme", "dark");
+        }
+      }
+
+      (function initTheme() {
+        const savedTheme = localStorage.getItem("theme");
+        const toggleBtn = document.querySelector(".theme-toggle");
+        const themeIcon = toggleBtn.querySelector(".theme-icon");
+        const themeText = toggleBtn.querySelector(".theme-text");
+
+        if (savedTheme) {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+          if (savedTheme === "light") {
+            themeIcon.innerHTML = "&#9788;";
+            themeText.textContent = "Dark";
+          } else {
+            themeIcon.innerHTML = "&#9789;";
+            themeText.textContent = "Light";
+          }
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+          themeIcon.innerHTML = "&#9789;";
+          themeText.textContent = "Light";
+        }
+      })();
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      window.addEventListener("scroll", () => {
+        const backToTop = document.querySelector(".back-to-top");
+        backToTop.classList.toggle("visible", window.scrollY > 300);
+      });
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      const sections = document.querySelectorAll(
+        "section[id], h2[id], h3[id], h4[id]",
+      );
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          if (window.scrollY >= section.offsetTop - 150) {
+            current = section.getAttribute("id");
+          }
+        });
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -33,7 +33,7 @@ app.use("/api/banks", bankRoutes);
 app.use("/api/transactions", transactionRoutes);
 
 app.get("/", (_req, res) => {
-  res.send({ message: "Sporton Backend API is running truly" });
+  res.sendFile(path.join(__dirname, "../docs/api.html"));
 });
 
 app.get("/test-middleware", authenticate, (_req, res) => {
