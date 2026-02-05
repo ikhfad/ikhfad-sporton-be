@@ -6,58 +6,66 @@
     <title>Sporton Backend API Documentation</title>
     <style>
       :root {
-        --primary-color: #2563eb;
-        --secondary-color: #1e40af;
-        --accent-color: #3b82f6;
+        /* Primary Colors */
+        --primary-color: #3b82f6;
+        --primary-hover: #2563eb;
+        --secondary-color: #1d4ed8;
+
+        /* Light Theme Variables */
         --bg-color: #f8fafc;
         --card-bg: #ffffff;
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-        --border-color: #e2e8f0;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --error-color: #ef4444;
-        --code-bg: #1e293b;
-        --code-text: #e2e8f0;
-        --sidebar-width: 280px;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --border-color: #cbd5e1;
+        --code-bg: #f1f5f9;
+        --code-text: #334155;
         --sidebar-bg: #ffffff;
         --hover-bg: #f1f5f9;
         --active-bg: #eff6ff;
-        --shadow-color: rgba(0, 0, 0, 0.05);
-        --alert-bg-info: #eff6ff;
-        --alert-text-info: #1e40af;
-        --alert-bg-warning: #fffbeb;
-        --alert-text-warning: #92400e;
-        --alert-bg-error: #fef2f2;
-        --alert-text-error: #991b1b;
-        --alert-bg-success: #f0fdf4;
-        --alert-text-success: #065f46;
+        --shadow-color: rgba(15, 23, 42, 0.08);
+
+        /* Status Colors (WCAG AA Compliant) */
+        --success-bg: #dcfce7;
+        --success-text: #14532d;
+        --warning-bg: #fef9c3;
+        --warning-text: #713f12;
+        --error-bg: #fee2e2;
+        --error-text: #7f1d1d;
+        --info-bg: #dbeafe;
+        --info-text: #1e3a8a;
+
         --table-hover: #f8fafc;
-        --inline-code-bg: #f1f5f9;
+        --inline-code-bg: #e2e8f0;
+        --inline-code-text: #0369a1;
       }
 
+      /* Dark Theme Variables (High Contrast) */
       [data-theme="dark"] {
-        --bg-color: #0f172a;
+        --bg-color: #020617;
         --card-bg: #1e293b;
-        --text-primary: #f1f5f9;
-        --text-secondary: #94a3b8;
-        --border-color: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --border-color: #475569;
         --code-bg: #0f172a;
         --code-text: #e2e8f0;
         --sidebar-bg: #1e293b;
         --hover-bg: #334155;
-        --active-bg: #3b82f6;
-        --shadow-color: rgba(0, 0, 0, 0.3);
-        --alert-bg-info: #1e3a5f;
-        --alert-text-info: #60a5fa;
-        --alert-bg-warning: #422006;
-        --alert-text-warning: #fbbf24;
-        --alert-bg-error: #450a0a;
-        --alert-text-error: #f87171;
-        --alert-bg-success: #064e3b;
-        --alert-text-success: #34d399;
-        --table-hover: #1e293b;
+        --active-bg: #2563eb;
+        --shadow-color: rgba(0, 0, 0, 0.4);
+
+        /* Dark Status Colors */
+        --success-bg: #052e16;
+        --success-text: #86efac;
+        --warning-bg: #422006;
+        --warning-text: #fde047;
+        --error-bg: #450a0a;
+        --error-text: #fca5a5;
+        --info-bg: #172554;
+        --info-text: #93c5fd;
+
+        --table-hover: #334155;
         --inline-code-bg: #334155;
+        --inline-code-text: #60a5fa;
       }
 
       * {
@@ -81,8 +89,8 @@
       header {
         background: linear-gradient(
           135deg,
-          var(--primary-color),
-          var(--secondary-color)
+          var(--secondary-color),
+          var(--primary-color)
         );
         color: white;
         padding: 20px 0;
@@ -96,52 +104,52 @@
 
       header p {
         font-size: 1rem;
-        opacity: 0.9;
+        opacity: 1;
+        font-weight: 500;
       }
 
       .version-badge {
         display: inline-block;
-        background: rgba(37, 99, 235, 0.3);
+        background: rgba(255, 255, 255, 0.2);
         padding: 4px 12px;
         border-radius: 20px;
         font-size: 0.85rem;
         margin-top: 10px;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.3);
       }
 
       .theme-toggle {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: var(--primary-color);
-        color: white;
+        background: var(--text-primary);
+        color: var(--bg-color);
         border: none;
-        padding: 10px 20px;
+        padding: 8px 16px;
         border-radius: 25px;
         cursor: pointer;
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 700;
         display: flex;
         align-items: center;
         gap: 8px;
         transition: all 0.3s ease;
         z-index: 1001;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       }
 
       .theme-toggle:hover {
-        background: var(--secondary-color);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        filter: brightness(1.1);
       }
 
-      [data-theme="light"] .theme-toggle {
-        background: #1e40af;
-        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
-      }
-
-      [data-theme="light"] .theme-toggle:hover {
-        background: #1e3a8a;
-        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
+      .theme-icon {
+        display: flex;
+        align-items: center;
+        width: 16px;
+        height: 16px;
       }
 
       .docs-layout {
@@ -151,7 +159,7 @@
       }
 
       .sidebar {
-        width: var(--sidebar-width);
+        width: 280px;
         background: var(--sidebar-bg);
         border-right: 1px solid var(--border-color);
         height: 100vh;
@@ -169,12 +177,12 @@
       }
 
       .sidebar-title {
-        font-size: 1rem;
+        font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.1em;
         color: var(--text-secondary);
         margin-bottom: 12px;
-        font-weight: 600;
+        font-weight: 700;
       }
 
       .sidebar-nav {
@@ -190,58 +198,55 @@
         padding: 10px 15px;
         text-decoration: none;
         color: var(--text-secondary);
-        font-size: 1rem;
+        font-size: 0.95rem;
         border-left: 3px solid transparent;
         transition: all 0.2s ease;
+        font-weight: 500;
       }
 
       .sidebar-nav a:hover {
         background: var(--hover-bg);
-        color: var(--primary-color);
-        border-radius: 8px;
+        color: var(--text-primary);
+        border-radius: 0 8px 8px 0;
       }
 
       .sidebar-nav a.active {
         background: var(--active-bg);
-        color: var(--primary-color);
-        border-left-color: var(--primary-color);
-        font-weight: 500;
-        border-radius: 8px;
-      }
-
-      [data-theme="dark"] .sidebar-nav a.active {
-        color: #60a5fa;
-        border-left-color: #60a5fa;
-        border-radius: 8px;
+        color: #ffffff;
+        border-left-color: #ffffff;
+        font-weight: 600;
+        border-radius: 0 8px 8px 0;
       }
 
       .sidebar-nav .category-header {
-        font-weight: 600;
-        color: white;
+        font-weight: 700;
+        color: var(--text-primary);
         padding: 12px 15px 8px;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        margin-top: 10px;
       }
 
       .sidebar-nav .sub-link {
         padding-left: 30px;
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
 
       .main-content {
         flex: 1;
-        padding: 30px 40px;
-        max-width: calc(100% - var(--sidebar-width));
+        padding: 40px;
+        max-width: calc(100% - 280px);
       }
 
       section {
         background: var(--card-bg);
+        border: 1px solid var(--border-color);
         border-radius: 12px;
         padding: 30px;
         margin-bottom: 30px;
-        box-shadow: 0 2px 10px var(--shadow-color);
+        box-shadow: 0 4px 6px var(--shadow-color);
         transition:
           background-color 0.3s ease,
-          box-shadow 0.3s ease;
+          border-color 0.3s ease;
       }
 
       section h2 {
@@ -260,6 +265,21 @@
         color: var(--text-primary);
         font-size: 1.2rem;
         margin: 25px 0 15px;
+      }
+
+      section h4 {
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        margin: 20px 0 10px;
+      }
+
+      section h5 {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin: 15px 0 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
       }
 
       section p {
@@ -284,14 +304,16 @@
         padding: 14px 16px;
         text-align: left;
         border-bottom: 1px solid var(--border-color);
-        font-size: 1rem;
+        font-size: 0.95rem;
       }
 
       th {
         background: var(--primary-color);
-        color: white;
-        font-weight: 600;
-        font-size: 0.9rem;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
       }
 
       tr:hover {
@@ -302,6 +324,46 @@
         border-bottom: none;
       }
 
+      .card-list {
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+        margin: 15px 0;
+      }
+
+      .card-list-item {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .card-row {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+      }
+
+      .card-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .card-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+        margin-bottom: 4px;
+        font-weight: 700;
+      }
+
+      .card-value {
+        font-size: 1rem;
+        color: var(--text-primary);
+      }
+
+      /* Code Blocks */
       pre {
         background: var(--code-bg);
         color: var(--code-text);
@@ -309,86 +371,83 @@
         border-radius: 8px;
         overflow-x: auto;
         margin: 15px 0;
-        font-family: "Fira Code", monospace;
-        font-size: 0.95rem;
+        font-family: "Fira Code", "Courier New", monospace;
+        font-size: 0.9rem;
         border: 1px solid var(--border-color);
         line-height: 1.6;
       }
 
       code {
-        font-family: "Fira Code", monospace;
+        font-family: "Fira Code", "Courier New", monospace;
         font-size: 0.9em;
       }
 
       p code,
-      td code {
+      td code,
+      .card-value code {
         background: var(--inline-code-bg);
-        padding: 4px 10px;
+        padding: 4px 8px;
         border-radius: 4px;
-        color: var(--primary-color);
-        font-size: 0.95rem;
-        font-weight: 500;
+        color: var(--inline-code-text);
+        font-size: 0.9rem;
+        font-weight: 600;
       }
 
-      [data-theme="dark"] p code,
-      [data-theme="dark"] td code {
-        color: #60a5fa;
-      }
-
+      /* Method Badges */
       .method {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         padding: 4px 10px;
-        border-radius: 5px;
+        border-radius: 4px;
         font-size: 0.75rem;
-        font-weight: 700;
+        font-weight: 800;
         text-transform: uppercase;
+        min-width: 60px;
       }
 
       .method-get {
         background: #059669;
         color: white;
       }
-
       .method-post {
         background: #2563eb;
         color: white;
       }
-
       .method-patch {
         background: #d97706;
         color: white;
       }
-
       .method-delete {
         background: #dc2626;
         color: white;
       }
-
       .method-put {
         background: #7c3aed;
         color: white;
       }
 
+      /* Content Type Badges */
       .content-type {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         padding: 4px 10px;
-        border-radius: 5px;
+        border-radius: 4px;
         font-size: 0.75rem;
         font-weight: 600;
-        background: #8b5cf6;
+        background: #7c3aed;
         color: white;
       }
 
       .content-type.multipart {
         background: #059669;
       }
-
       .content-type.json {
-        background: #8b5cf6;
+        background: #7c3aed;
       }
 
+      /* Endpoint Cards */
       .endpoint-card {
         background: var(--bg-color);
         border: 1px solid var(--border-color);
@@ -399,7 +458,8 @@
       }
 
       .endpoint-card:hover {
-        box-shadow: 0 4px 15px var(--shadow-color);
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 12px var(--shadow-color);
       }
 
       .endpoint-header {
@@ -408,13 +468,17 @@
         gap: 12px;
         margin-bottom: 15px;
         flex-wrap: wrap;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
       }
 
       .endpoint-path {
         font-family: "Fira Code", monospace;
-        font-size: 0.95rem;
+        font-size: 1rem;
         color: var(--text-primary);
         flex: 1;
+        word-break: break-all;
+        font-weight: 600;
       }
 
       .endpoint-description {
@@ -424,81 +488,78 @@
         line-height: 1.7;
       }
 
+      /* Status Pills */
       .status {
         display: inline-flex;
         align-items: center;
-        padding: 3px 10px;
+        justify-content: center;
+        padding: 4px 12px;
         border-radius: 4px;
         font-size: 0.8rem;
-        font-weight: 500;
+        font-weight: 700;
       }
 
       .status-200 {
-        background: #d1fae5;
-        color: #065f46;
+        background: var(--success-bg);
+        color: var(--success-text);
       }
-
       .status-201 {
-        background: #dbeafe;
-        color: #1e40af;
+        background: var(--info-bg);
+        color: var(--info-text);
       }
-
       .status-400 {
-        background: #fef3c7;
-        color: #92400e;
+        background: var(--warning-bg);
+        color: var(--warning-text);
       }
-
       .status-401 {
-        background: #fee2e2;
-        color: #991b1b;
+        background: var(--error-bg);
+        color: var(--error-text);
       }
-
       .status-404 {
-        background: #fee2e2;
-        color: #991b1b;
+        background: var(--error-bg);
+        color: var(--error-text);
       }
-
       .status-500 {
-        background: #fee2e2;
-        color: #991b1b;
+        background: var(--error-bg);
+        color: var(--error-text);
       }
 
+      /* Alerts */
       .alert {
         padding: 16px 20px;
         border-radius: 8px;
         margin: 18px 0;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        font-weight: 500;
       }
 
       .alert-info {
-        background: var(--alert-bg-info);
-        color: var(--alert-text-info);
-        border-left: 4px solid var(--accent-color);
+        background: var(--info-bg);
+        color: var(--info-text);
+        border-left: 4px solid var(--info-text);
       }
-
       .alert-warning {
-        background: var(--alert-bg-warning);
-        color: var(--alert-text-warning);
-        border-left: 4px solid var(--warning-color);
+        background: var(--warning-bg);
+        color: var(--warning-text);
+        border-left: 4px solid var(--warning-text);
       }
-
       .alert-error {
-        background: var(--alert-bg-error);
-        color: var(--alert-text-error);
-        border-left: 4px solid var(--error-color);
+        background: var(--error-bg);
+        color: var(--error-text);
+        border-left: 4px solid var(--error-text);
       }
-
       .alert-success {
-        background: var(--alert-bg-success);
-        color: var(--alert-text-success);
-        border-left: 4px solid var(--success-color);
+        background: var(--success-bg);
+        color: var(--success-text);
+        border-left: 4px solid var(--success-text);
       }
 
+      /* Category Headers */
       .category-header {
         background: linear-gradient(
           135deg,
-          var(--primary-color),
-          var(--secondary-color)
+          var(--secondary-color),
+          var(--primary-color)
         );
         color: white;
         padding: 15px 20px;
@@ -512,11 +573,11 @@
       .category-header h3 {
         color: white;
         margin: 0;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
 
       .category-icon {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
 
       .back-to-top {
@@ -532,7 +593,7 @@
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         transition: all 0.3s ease;
         opacity: 0;
         visibility: hidden;
@@ -548,25 +609,23 @@
 
       .back-to-top:hover {
         transform: translateY(-5px);
-        background: var(--secondary-color);
+        background: var(--primary-hover);
       }
 
       footer {
         background: var(--card-bg);
-        color: var(--text-primary);
+        color: var(--text-secondary);
         text-align: center;
         padding: 25px 0;
         margin-top: 40px;
-        font-size: 1rem;
-        transition:
-          background-color 0.3s ease,
-          color 0.3s ease,
-          border-color 0.3s ease;
+        font-size: 0.95rem;
+        border-top: 1px solid var(--border-color);
       }
 
       footer a {
-        color: var(--accent-color);
+        color: var(--primary-color);
         text-decoration: none;
+        font-weight: 600;
       }
 
       .section-divider {
@@ -609,10 +668,6 @@
           font-size: 1.4rem;
         }
 
-        section h3 {
-          font-size: 1.1rem;
-        }
-
         .endpoint-header {
           flex-direction: column;
           align-items: flex-start;
@@ -620,9 +675,11 @@
         }
 
         table {
-          font-size: 0.85rem;
-          overflow-x: auto;
-          white-space: nowrap;
+          display: none;
+        }
+
+        .card-list {
+          display: flex;
         }
 
         pre {
@@ -648,7 +705,7 @@
     </header>
 
     <button class="theme-toggle" onclick="toggleTheme()">
-      <span class="theme-icon">&#9789;</span>
+      <span class="theme-icon"></span>
       <span class="theme-text">Light</span>
     </button>
 
@@ -675,10 +732,14 @@
             </li>
             <li class="category-header">Categories</li>
             <li>
-              <a href="#cat-get-all" class="nav-link sub-link">GET All</a>
+              <a href="#cat-get-all" class="nav-link sub-link"
+                >GET All Categories</a
+              >
             </li>
             <li>
-              <a href="#cat-get-one" class="nav-link sub-link">GET One</a>
+              <a href="#cat-get-one" class="nav-link sub-link"
+                >GET Category By ID</a
+              >
             </li>
             <li>
               <a href="#cat-create" class="nav-link sub-link">POST Create</a>
@@ -691,10 +752,14 @@
             </li>
             <li class="category-header">Products</li>
             <li>
-              <a href="#prod-get-all" class="nav-link sub-link">GET All</a>
+              <a href="#prod-get-all" class="nav-link sub-link"
+                >GET All Products</a
+              >
             </li>
             <li>
-              <a href="#prod-get-one" class="nav-link sub-link">GET One</a>
+              <a href="#prod-get-one" class="nav-link sub-link"
+                >GET Product By ID</a
+              >
             </li>
             <li>
               <a href="#prod-create" class="nav-link sub-link">POST Create</a>
@@ -707,10 +772,14 @@
             </li>
             <li class="category-header">Banks</li>
             <li>
-              <a href="#bank-get-all" class="nav-link sub-link">GET All</a>
+              <a href="#bank-get-all" class="nav-link sub-link"
+                >GET All Banks</a
+              >
             </li>
             <li>
-              <a href="#bank-get-one" class="nav-link sub-link">GET One</a>
+              <a href="#bank-get-one" class="nav-link sub-link"
+                >GET Bank By ID</a
+              >
             </li>
             <li>
               <a href="#bank-create" class="nav-link sub-link">POST Create</a>
@@ -725,8 +794,16 @@
             <li>
               <a href="#tx-create" class="nav-link sub-link">POST Checkout</a>
             </li>
-            <li><a href="#tx-get-all" class="nav-link sub-link">GET All</a></li>
-            <li><a href="#tx-get-one" class="nav-link sub-link">GET One</a></li>
+            <li>
+              <a href="#tx-get-all" class="nav-link sub-link"
+                >GET All Transactions</a
+              >
+            </li>
+            <li>
+              <a href="#tx-get-one" class="nav-link sub-link"
+                >GET Transaction By ID</a
+              >
+            </li>
             <li>
               <a href="#tx-update" class="nav-link sub-link">PATCH Update</a>
             </li>
@@ -735,7 +812,9 @@
         <div class="sidebar-section">
           <div class="sidebar-title">Reference</div>
           <ul class="sidebar-nav">
-            <li><a href="#openapi" class="nav-link">OpenAPI Spec</a></li>
+            <li>
+              <a href="#openapi" class="nav-link">OpenAPI Specification</a>
+            </li>
             <li><a href="#errors" class="nav-link">Error Reference</a></li>
           </ul>
         </div>
@@ -795,6 +874,61 @@
               </tr>
             </tbody>
           </table>
+
+          <div class="card-list">
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">Content Type</div>
+                <div class="card-value">
+                  <span class="content-type json">application/json</span>
+                </div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Usage</div>
+                <div class="card-value">Standard JSON requests</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Endpoints</div>
+                <div class="card-value">Auth, Banks, Transaction Updates</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">Content Type</div>
+                <div class="card-value">
+                  <span class="content-type multipart"
+                    >multipart/form-data</span
+                  >
+                </div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Usage</div>
+                <div class="card-value">File uploads with form fields</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Endpoints</div>
+                <div class="card-value">Categories, Products, Transactions</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">Content Type</div>
+                <div class="card-value">
+                  <span class="content-type"
+                    >application/x-www-form-urlencoded</span
+                  >
+                </div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Usage</div>
+                <div class="card-value">Simple form submissions</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Endpoints</div>
+                <div class="card-value">All endpoints (fallback)</div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <hr class="section-divider" />
@@ -921,6 +1055,24 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Parameter</div>
+                  <div class="card-value"><code>id</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category's MongoDB ObjectId</div>
+                </div>
+              </div>
+            </div>
+
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439011",
@@ -940,6 +1092,7 @@
               Create a new category (requires authentication).
             </p>
             <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+
             <table>
               <thead>
                 <tr>
@@ -970,6 +1123,64 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>name</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category name</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>description</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category description</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>image</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">file</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category image file</div>
+                </div>
+              </div>
+            </div>
+
             <div class="alert alert-info">
               <strong>Content-Type:</strong> Use
               <code>multipart/form-data</code>
@@ -996,6 +1207,7 @@
               Update a category (requires authentication).
             </p>
             <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+
             <table>
               <thead>
                 <tr>
@@ -1026,6 +1238,64 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>name</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category name</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>description</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category description</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>image</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">file</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">New category image file</div>
+                </div>
+              </div>
+            </div>
+
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439011",
@@ -1096,6 +1366,7 @@
             <p class="endpoint-description">
               Retrieve a specific product by ID.
             </p>
+
             <table>
               <thead>
                 <tr>
@@ -1112,6 +1383,24 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Parameter</div>
+                  <div class="card-value"><code>id</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product's MongoDB ObjectId</div>
+                </div>
+              </div>
+            </div>
+
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439012",
@@ -1186,6 +1475,118 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>name</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product name</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>description</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product description</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>stock</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">number</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Stock quantity</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>price</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">number</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product price</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>category</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category ObjectId</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>image</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">file</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product image file</div>
+                </div>
+              </div>
+            </div>
+
             <div class="alert alert-info">
               <strong>Content-Type:</strong> Use
               <code>multipart/form-data</code>
@@ -1214,6 +1615,7 @@
               Update a product (requires authentication).
             </p>
             <pre><code>Authorization: Bearer YOUR_TOKEN_HERE</code></pre>
+
             <table>
               <thead>
                 <tr>
@@ -1262,6 +1664,118 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>name</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product name</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>description</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product description</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>stock</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">number</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Stock quantity</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>price</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">number</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Product price</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>category</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Category ObjectId</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>image</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">file</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">No</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">New product image file</div>
+                </div>
+              </div>
+            </div>
+
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439016",
@@ -1467,6 +1981,118 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>purchasedItems</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">JSON string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Array of {productId, qty}</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>totalPayment</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string/number</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Total payment amount</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>customerName</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Customer name</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>customerContact</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Phone/email</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>customerAddress</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">string</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Delivery address</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Field</div>
+                  <div class="card-value"><code>image</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Type</div>
+                  <div class="card-value">file</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Required</div>
+                  <div class="card-value">Yes</div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Payment proof image file</div>
+                </div>
+              </div>
+            </div>
+
             <div class="alert alert-info">
               <strong>Note:</strong> When using multipart/form-data,
               <code>purchasedItems</code> must be sent as a JSON string.
@@ -1488,7 +2114,6 @@
   "status": "pending"
 }</code></pre>
           </div>
-
           <h4 id="tx-get-all">GET /api/transactions</h4>
           <div class="endpoint-card">
             <div class="endpoint-header">
@@ -1519,7 +2144,6 @@
   }
 ]</code></pre>
           </div>
-
           <h4 id="tx-get-one">GET /api/transactions/:id</h4>
           <div class="endpoint-card">
             <div class="endpoint-header">
@@ -1546,7 +2170,6 @@
   "paymentProof": "transactions/payment456.png"
 }</code></pre>
           </div>
-
           <h4 id="tx-update">PATCH /api/transactions/:id</h4>
           <div class="endpoint-card">
             <div class="endpoint-header">
@@ -1585,6 +2208,44 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="card-list">
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Status</div>
+                  <div class="card-value"><code>pending</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">Payment awaiting verification</div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Status</div>
+                  <div class="card-value"><code>paid</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">
+                    Payment confirmed - deducts stock
+                  </div>
+                </div>
+              </div>
+              <div class="card-list-item">
+                <div class="card-row">
+                  <div class="card-label">Status</div>
+                  <div class="card-value"><code>rejected</code></div>
+                </div>
+                <div class="card-row">
+                  <div class="card-label">Description</div>
+                  <div class="card-value">
+                    Payment rejected - restocks items
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <h5>Response <span class="status status-200">200 OK</span></h5>
             <pre><code>{
   "_id": "507f1f77bcf86cd799439021",
@@ -1753,6 +2414,153 @@ components:
               </tr>
             </tbody>
           </table>
+
+          <div class="card-list">
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>400</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Bad Request</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">
+                  Invalid request format or missing required fields
+                </div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>400</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Bad Request</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Invalid format for purchasedItems</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>400</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Bad Request</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Payment proof is required!</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>400</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Bad Request</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Invalid Category/Product ID format</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>400</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Bad Request</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">All fields are required</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>401</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Unauthorized</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Authentication Required!</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>401</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Unauthorized</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Invalid Token!</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>404</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Not Found</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Resource does not exist</div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>404</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Not Found</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">
+                  Category/Product/Bank/Transaction not found
+                </div>
+              </div>
+            </div>
+            <div class="card-list-item">
+              <div class="card-row">
+                <div class="card-label">HTTP Code</div>
+                <div class="card-value"><strong>500</strong></div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Error Type</div>
+                <div class="card-value">Internal Server Error</div>
+              </div>
+              <div class="card-row">
+                <div class="card-label">Message</div>
+                <div class="card-value">Server-side error</div>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
     </div>
@@ -1772,6 +2580,15 @@ components:
     </footer>
 
     <script>
+      const svgMoon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
+  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
+  <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+</svg>`;
+
+      const svgSun = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high-fill" viewBox="0 0 16 16">
+  <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+</svg>`;
+
       (function () {
         const hostname = window.location.hostname;
         const origin = window.location.origin;
@@ -1816,12 +2633,12 @@ components:
 
         if (html.getAttribute("data-theme") === "dark") {
           html.setAttribute("data-theme", "light");
-          themeIcon.innerHTML = "&#9788;";
+          themeIcon.innerHTML = svgMoon; // Show Moon for Light Mode (to switch to Dark)
           themeText.textContent = "Dark";
           localStorage.setItem("theme", "light");
         } else {
           html.setAttribute("data-theme", "dark");
-          themeIcon.innerHTML = "&#9789;";
+          themeIcon.innerHTML = svgSun; // Show Sun for Dark Mode (to switch to Light)
           themeText.textContent = "Light";
           localStorage.setItem("theme", "dark");
         }
@@ -1833,18 +2650,16 @@ components:
         const themeIcon = toggleBtn.querySelector(".theme-icon");
         const themeText = toggleBtn.querySelector(".theme-text");
 
-        if (savedTheme) {
-          document.documentElement.setAttribute("data-theme", savedTheme);
-          if (savedTheme === "light") {
-            themeIcon.innerHTML = "&#9788;";
-            themeText.textContent = "Dark";
-          } else {
-            themeIcon.innerHTML = "&#9789;";
-            themeText.textContent = "Light";
-          }
+        // Default to dark if no preference, or use saved preference
+        const theme = savedTheme || "dark";
+
+        document.documentElement.setAttribute("data-theme", theme);
+
+        if (theme === "light") {
+          themeIcon.innerHTML = svgMoon; // Show Moon (go to dark)
+          themeText.textContent = "Dark";
         } else {
-          document.documentElement.setAttribute("data-theme", "dark");
-          themeIcon.innerHTML = "&#9789;";
+          themeIcon.innerHTML = svgSun; // Show Sun (go to light)
           themeText.textContent = "Light";
         }
       })();
