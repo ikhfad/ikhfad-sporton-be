@@ -33,5 +33,5 @@ php_version: "8.5"
 xdebug_enabled: false
 database:
   type: mariadb
-  version: "10.11"
+  version: "11.8"
 composer_version: "2"
