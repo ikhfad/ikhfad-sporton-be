@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sporton Backend API Documentation</title>
+    <meta
+      name="description"
+      content="Sporton Backend API Documentation - E-commerce API for Sports Equipment Retail"
+    />
+    <meta
+      name="keywords"
+      content="API, Documentation, Sporton, Backend, E-commerce, Sports"
+    />
     <style>
       :root {
         /* Primary Colors */
@@ -98,18 +106,76 @@
       ::-webkit-scrollbar-thumb {
         background-color: var(--border-color);
         border-radius: 20px;
-        border: 2px solid transparent; /* Creates padding around the thumb */
+        border: 2px solid transparent;
         background-clip: content-box;
       }
 
-      /* Hover state using your primary color */
       ::-webkit-scrollbar-thumb:hover {
         background-color: var(--text-secondary);
       }
 
-      /* Active/Grabbed state */
       ::-webkit-scrollbar-thumb:active {
         background-color: var(--primary-color);
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Accessibility Focus */
+      :focus-visible {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+      }
+
+      /* Skip link for keyboard navigation */
+      .skip-to-main {
+        position: absolute;
+        top: -40px;
+        left: 10px;
+        background: var(--primary-color);
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 1002;
+        transition: top 0.3s;
+      }
+
+      .skip-to-main:focus {
+        top: 10px;
+      }
+
+      /* Screen reader only */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Reading progress indicator */
+      .reading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--border-color);
+        z-index: 1000;
+      }
+
+      .reading-progress-bar {
+        height: 100%;
+        background: var(--primary-color);
+        width: 0%;
+        transition: width 0.2s ease;
       }
 
       body {
@@ -183,6 +249,11 @@
         filter: brightness(1.1);
       }
 
+      .theme-toggle:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+      }
+
       .theme-icon {
         display: flex;
         align-items: center;
@@ -215,12 +286,12 @@
       }
 
       .sidebar-title {
-        font-size: 0.85rem;
+        font-size: 1rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: var(--text-secondary);
         margin-bottom: 12px;
-        font-weight: 700;
+        font-weight: 800;
       }
 
       .sidebar-nav {
@@ -228,15 +299,15 @@
       }
 
       .sidebar-nav li {
-        margin-bottom: 2px;
+        margin-bottom: 3px;
       }
 
       .sidebar-nav a {
         display: block;
-        padding: 10px 15px;
+        padding: 12px 17px;
         text-decoration: none;
         color: var(--text-secondary);
-        font-size: 0.95rem;
+        font-size: 1rem;
         border-left: 3px solid transparent;
         transition: all 0.2s ease;
         font-weight: 500;
@@ -244,15 +315,16 @@
 
       .sidebar-nav a:hover {
         background: var(--hover-bg);
-        color: var(--text-primary);
+        font-weight: 700;
+        color: var(--text-secondary);
         border-radius: 0 8px 8px 0;
       }
 
       .sidebar-nav a.active {
         background: var(--active-bg);
-        color: #ffffff;
+        color: var(--text-secondary);
         border-left-color: #ffffff;
-        font-weight: 600;
+        font-weight: 700;
         border-radius: 0 8px 8px 0;
       }
 
@@ -260,7 +332,7 @@
         font-weight: 700;
         color: var(--text-primary-sidebar);
         padding: 12px 15px 8px;
-        font-size: 0.9rem;
+        font-size: 1.2rem;
         margin-top: 10px;
       }
 
@@ -285,6 +357,18 @@
         transition:
           background-color 0.3s ease,
           border-color 0.3s ease;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       section h2 {
@@ -375,6 +459,7 @@
         border-radius: 8px;
         padding: 15px;
         box-shadow: 0 1px 3px var(--shadow-color);
+        animation: fadeIn 0.5s ease-out;
       }
 
       .card-row {
@@ -413,6 +498,16 @@
         font-size: 0.9rem;
         border: 1px solid var(--border-color);
         line-height: 1.6;
+        position: relative;
+      }
+
+      .loading::after {
+        content: "Loading...";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--text-secondary);
       }
 
       code {
@@ -493,6 +588,7 @@
         padding: 20px;
         margin: 20px 0;
         transition: all 0.3s ease;
+        animation: fadeIn 0.5s ease-out;
       }
 
       .endpoint-card:hover {
@@ -535,6 +631,11 @@
         border-radius: 4px;
         font-size: 0.8rem;
         font-weight: 700;
+        transition: transform 0.2s ease;
+      }
+
+      .status:hover {
+        transform: scale(1.05);
       }
 
       .status-200 {
@@ -616,6 +717,93 @@
 
       .category-icon {
         font-size: 1.5rem;
+      }
+
+      /* Lock icon styling */
+      .lock-icon {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+        color: var(--text-secondary);
+        vertical-align: middle;
+        position: relative;
+      }
+
+      .endpoint-header .lock-icon {
+        margin-left: 4px;
+      }
+
+      .lock-icon::after {
+        content: "Authentication required";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text-primary);
+        color: var(--bg-color);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      .lock-icon:hover::after {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Required field indicator */
+      .required::after {
+        content: " *";
+        color: var(--error-text);
+      }
+
+      /* Copy button styling */
+      .copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: var(--border-color);
+        color: var(--text-primary);
+        border: none;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        opacity: 0.9;
+      }
+
+      .copy-btn:hover {
+        background: var(--primary-color);
+        color: white;
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: var(--success-text);
+        color: white;
+      }
+
+      .copy-btn .copy-icon {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+        flex-shrink: 0;
+      }
+
+      .copy-btn .copy-text {
+        display: inline-block;
       }
 
       .back-to-top {
@@ -723,6 +911,7 @@
         pre {
           font-size: 0.8rem;
           padding: 15px;
+          padding-top: 40px; /* Add padding for copy button */
         }
 
         .back-to-top {
@@ -732,10 +921,64 @@
           height: 45px;
           font-size: 1.3rem;
         }
+
+        /* Mobile copy button styles */
+        .copy-btn {
+          padding: 4px;
+          width: 32px;
+          height: 32px;
+          justify-content: center;
+          opacity: 0.6;
+          background: var(--code-bg);
+          border: 1px solid var(--border-color);
+        }
+
+        .copy-btn:hover {
+          opacity: 1;
+          background: var(--primary-color);
+        }
+
+        .copy-btn .copy-text {
+          display: none;
+        }
+
+        .copy-btn .copy-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        pre {
+          padding: 12px;
+          padding-top: 40px;
+        }
+
+        .copy-btn {
+          top: 6px;
+          right: 6px;
+          width: 28px;
+          height: 28px;
+        }
+
+        .copy-btn .copy-icon {
+          width: 14px;
+          height: 14px;
+        }
       }
     </style>
   </head>
   <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-main sr-only"
+      >Skip to main content</a
+    >
+
+    <!-- Reading progress bar -->
+    <div class="reading-progress">
+      <div class="reading-progress-bar"></div>
+    </div>
+
     <header id="top">
       <h1>Sporton Backend API</h1>
       <p>E-commerce API for Sports Equipment Retail</p>
@@ -746,6 +989,35 @@
       <span class="theme-icon"></span>
       <span class="theme-text">Light</span>
     </button>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="lock-outline" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"
+        />
+      </symbol>
+      <symbol id="lock-fill" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"
+        />
+      </symbol>
+      <!-- Copy icon SVG -->
+      <symbol id="copy-icon" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"
+        />
+      </symbol>
+      <!-- Check icon for copied state -->
+      <symbol id="check-icon" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+        />
+      </symbol>
+    </svg>
 
     <div class="docs-layout">
       <nav class="sidebar">
@@ -780,13 +1052,19 @@
               >
             </li>
             <li>
-              <a href="#cat-create" class="nav-link sub-link">POST Create</a>
+              <a href="#cat-create" class="nav-link sub-link"
+                >POST Create Category</a
+              >
             </li>
             <li>
-              <a href="#cat-update" class="nav-link sub-link">PATCH Update</a>
+              <a href="#cat-update" class="nav-link sub-link"
+                >PATCH Update Category</a
+              >
             </li>
             <li>
-              <a href="#cat-delete" class="nav-link sub-link">DELETE Delete</a>
+              <a href="#cat-delete" class="nav-link sub-link"
+                >DELETE Delete Category</a
+              >
             </li>
             <li class="category-header">Products</li>
             <li>
@@ -800,13 +1078,19 @@
               >
             </li>
             <li>
-              <a href="#prod-create" class="nav-link sub-link">POST Create</a>
+              <a href="#prod-create" class="nav-link sub-link"
+                >POST Create Product</a
+              >
             </li>
             <li>
-              <a href="#prod-update" class="nav-link sub-link">PATCH Update</a>
+              <a href="#prod-update" class="nav-link sub-link"
+                >PATCH Update Product</a
+              >
             </li>
             <li>
-              <a href="#prod-delete" class="nav-link sub-link">DELETE Delete</a>
+              <a href="#prod-delete" class="nav-link sub-link"
+                >DELETE Delete Product</a
+              >
             </li>
             <li class="category-header">Banks</li>
             <li>
@@ -820,17 +1104,25 @@
               >
             </li>
             <li>
-              <a href="#bank-create" class="nav-link sub-link">POST Create</a>
+              <a href="#bank-create" class="nav-link sub-link"
+                >POST Create Bank</a
+              >
             </li>
             <li>
-              <a href="#bank-update" class="nav-link sub-link">PATCH Update</a>
+              <a href="#bank-update" class="nav-link sub-link"
+                >PATCH Update Bank</a
+              >
             </li>
             <li>
-              <a href="#bank-delete" class="nav-link sub-link">DELETE Delete</a>
+              <a href="#bank-delete" class="nav-link sub-link"
+                >DELETE Delete Bank</a
+              >
             </li>
             <li class="category-header">Transactions</li>
             <li>
-              <a href="#tx-create" class="nav-link sub-link">POST Checkout</a>
+              <a href="#tx-create" class="nav-link sub-link"
+                >POST Create Transaction</a
+              >
             </li>
             <li>
               <a href="#tx-get-all" class="nav-link sub-link"
@@ -843,7 +1135,9 @@
               >
             </li>
             <li>
-              <a href="#tx-update" class="nav-link sub-link">PATCH Update</a>
+              <a href="#tx-update" class="nav-link sub-link"
+                >PATCH Update Transactions</a
+              >
             </li>
           </ul>
         </div>
@@ -858,7 +1152,7 @@
         </div>
       </nav>
 
-      <main class="main-content">
+      <main class="main-content" id="main-content">
         <section id="overview">
           <h2>1. Overview</h2>
           <h3>Purpose</h3>
@@ -881,9 +1175,9 @@
           <table>
             <thead>
               <tr>
-                <th>Content Type</th>
-                <th>Usage</th>
-                <th>Endpoints</th>
+                <th scope="col">Content Type</th>
+                <th scope="col">Usage</th>
+                <th scope="col">Endpoints</th>
               </tr>
             </thead>
             <tbody>
@@ -1020,6 +1314,9 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/auth/initiate-admin-user</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">
@@ -1080,9 +1377,9 @@
             <table>
               <thead>
                 <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Description</th>
+                  <th scope="col">Parameter</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -1124,6 +1421,9 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/categories</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
@@ -1134,10 +1434,10 @@
             <table>
               <thead>
                 <tr>
-                  <th>Field</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
+                  <th scope="col">Field</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Required</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -1239,6 +1539,9 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/categories/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
@@ -1249,10 +1552,10 @@
             <table>
               <thead>
                 <tr>
-                  <th>Field</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
+                  <th scope="col">Field</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Required</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -1348,6 +1651,9 @@
             <div class="endpoint-header">
               <span class="method method-delete">DELETE</span>
               <span class="endpoint-path">/api/categories/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
             </div>
             <p class="endpoint-description">
               Delete a category (requires authentication).
@@ -1408,9 +1714,9 @@
             <table>
               <thead>
                 <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Description</th>
+                  <th scope="col">Parameter</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -1459,6 +1765,9 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/products</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
@@ -1468,10 +1777,10 @@
             <table>
               <thead>
                 <tr>
-                  <th>Field</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
+                  <th scope="col">Field</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Required</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -1647,6 +1956,9 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/products/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type multipart">multipart/form-data</span>
             </div>
             <p class="endpoint-description">
@@ -1657,10 +1969,10 @@
             <table>
               <thead>
                 <tr>
-                  <th>Field</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
+                  <th scope="col">Field</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Required</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -1829,6 +2141,9 @@
             <div class="endpoint-header">
               <span class="method method-delete">DELETE</span>
               <span class="endpoint-path">/api/products/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
             </div>
             <p class="endpoint-description">
               Delete a product (requires authentication).
@@ -1893,6 +2208,9 @@
             <div class="endpoint-header">
               <span class="method method-post">POST</span>
               <span class="endpoint-path">/api/banks</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">
@@ -1919,6 +2237,9 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/banks/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">Update a bank account.</p>
@@ -1942,6 +2263,9 @@
             <div class="endpoint-header">
               <span class="method method-delete">DELETE</span>
               <span class="endpoint-path">/api/banks/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
             </div>
             <p class="endpoint-description">Delete a bank account.</p>
             <h5>Response <span class="status status-200">200 OK</span></h5>
@@ -1968,16 +2292,14 @@
               <span class="endpoint-path">/api/transactions/checkout</span>
               <span class="content-type multipart">multipart/form-data</span>
             </div>
-            <p class="endpoint-description">
-              Create a new transaction (requires authentication).
-            </p>
+            <p class="endpoint-description">Create a new transaction.</p>
             <table>
               <thead>
                 <tr>
-                  <th>Field</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
+                  <th scope="col">Field</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Required</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -2157,6 +2479,9 @@
             <div class="endpoint-header">
               <span class="method method-get">GET</span>
               <span class="endpoint-path">/api/transactions</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
             </div>
             <p class="endpoint-description">
               Retrieve all transactions (requires authentication).
@@ -2213,6 +2538,9 @@
             <div class="endpoint-header">
               <span class="method method-patch">PATCH</span>
               <span class="endpoint-path">/api/transactions/{id}</span>
+              <svg class="lock-icon">
+                <use href="#lock-outline"></use>
+              </svg>
               <span class="content-type json">application/json</span>
             </div>
             <p class="endpoint-description">
@@ -2227,8 +2555,8 @@
             <table>
               <thead>
                 <tr>
-                  <th>Status</th>
-                  <th>Description</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Description</th>
                 </tr>
               </thead>
               <tbody>
@@ -2394,9 +2722,9 @@ components:
           <table>
             <thead>
               <tr>
-                <th>HTTP Code</th>
-                <th>Error Type</th>
-                <th>Message</th>
+                <th scope="col">HTTP Code</th>
+                <th scope="col">Error Type</th>
+                <th scope="col">Message</th>
               </tr>
             </thead>
             <tbody>
@@ -2627,42 +2955,164 @@ components:
   <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
 </svg>`;
 
-      (function () {
-        const hostname = window.location.hostname;
-        const origin = window.location.origin;
-        const protocol = window.location.protocol;
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Base URL detection
+        (function () {
+          const hostname = window.location.hostname;
+          const origin = window.location.origin;
+          const protocol = window.location.protocol;
 
-        let apiLocal = "Not in local server environment";
-        let apiDdev = "Not in local DDEV server environment";
-        let apiProduction = "Not in production server environment";
+          let apiLocal = "Not in local server environment";
+          let apiDdev = "Not in local DDEV server environment";
+          let apiProduction = "Not in production server environment";
 
-        if (protocol === "file:") {
-          apiLocal = "File opened locally";
-          apiDdev = "File opened locally";
-          apiProduction = "Not in server environment";
-        }
+          if (protocol === "file:") {
+            apiLocal = "File opened locally";
+            apiDdev = "File opened locally";
+            apiProduction = "Not in server environment";
+          }
 
-        if (hostname === "localhost" || hostname === "127.0.0.1") {
-          apiLocal = `${origin}/api`;
-        }
+          if (hostname === "localhost" || hostname === "127.0.0.1") {
+            apiLocal = `${origin}/api`;
+          }
 
-        if (hostname.includes(".ddev.site")) {
-          apiDdev = `${origin}/api`;
-        }
+          if (hostname.includes(".ddev.site")) {
+            apiDdev = `${origin}/api`;
+          }
 
-        if (
-          !hostname.includes("localhost") &&
-          !hostname.includes(".ddev.site") &&
-          hostname.includes(".")
-        ) {
-          apiProduction = `${origin}/api`;
-        }
+          if (
+            !hostname.includes("localhost") &&
+            !hostname.includes(".ddev.site") &&
+            hostname.includes(".")
+          ) {
+            apiProduction = `${origin}/api`;
+          }
 
-        document.getElementById("local-api").innerText = apiLocal;
-        document.getElementById("ddev-api").innerText = apiDdev;
-        document.getElementById("prod-api").innerText = apiProduction;
-      })();
+          document.getElementById("local-api").innerText = apiLocal;
+          document.getElementById("ddev-api").innerText = apiDdev;
+          document.getElementById("prod-api").innerText = apiProduction;
+        })();
 
+        // Add copy buttons to code blocks
+        document.querySelectorAll("pre").forEach((pre) => {
+          const button = document.createElement("button");
+          button.className = "copy-btn";
+          button.innerHTML = `
+            <svg class="copy-icon">
+              <use href="#copy-icon"></use>
+            </svg>
+            <span class="copy-text">Copy</span>
+          `;
+          button.setAttribute("aria-label", "Copy code to clipboard");
+          button.setAttribute("title", "Copy to clipboard");
+
+          button.addEventListener("click", async () => {
+            const code = pre.querySelector("code")?.innerText || pre.innerText;
+            try {
+              await navigator.clipboard.writeText(code);
+              const originalHTML = button.innerHTML;
+              button.innerHTML = `
+                <svg class="copy-icon">
+                  <use href="#check-icon"></use>
+                </svg>
+                <span class="copy-text">Copied!</span>
+              `;
+              button.classList.add("copied");
+
+              setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.classList.remove("copied");
+              }, 2000);
+            } catch (err) {
+              const originalHTML = button.innerHTML;
+              button.innerHTML = `<span class="copy-text">Failed</span>`;
+              button.style.background = "var(--error-text)";
+              setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = "";
+              }, 2000);
+            }
+          });
+
+          pre.style.position = "relative";
+          pre.appendChild(button);
+        });
+
+        // Improve table accessibility
+        document.querySelectorAll("table").forEach((table) => {
+          const headers = table.querySelectorAll("th");
+          headers.forEach((th) => {
+            if (!th.hasAttribute("scope")) {
+              th.setAttribute("scope", "col");
+            }
+          });
+        });
+
+        // Initialize theme
+        initTheme();
+
+        // Initialize reading progress
+        initReadingProgress();
+
+        // Add keyboard shortcuts
+        document.addEventListener("keydown", (e) => {
+          // Alt + T to toggle theme
+          if (e.altKey && e.key === "t") {
+            e.preventDefault();
+            toggleTheme();
+          }
+          // Alt + H to go home
+          if (e.altKey && e.key === "h") {
+            e.preventDefault();
+            window.location.href = "#top";
+          }
+          // Escape to blur focused element
+          if (e.key === "Escape") {
+            document.activeElement.blur();
+          }
+        });
+
+        // Scroll to top button
+        window.addEventListener("scroll", () => {
+          const backToTop = document.querySelector(".back-to-top");
+          backToTop.classList.toggle("visible", window.scrollY > 300);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        });
+
+        // Active navigation highlighting
+        const sections = document.querySelectorAll(
+          "section[id], h2[id], h3[id], h4[id]",
+        );
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+          let current = "";
+          sections.forEach((section) => {
+            if (window.scrollY >= section.offsetTop - 150) {
+              current = section.getAttribute("id");
+            }
+          });
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+              link.classList.add("active");
+            }
+          });
+        });
+      });
+
+      // Theme functions
       function toggleTheme() {
         const html = document.documentElement;
         const toggleBtn = document.querySelector(".theme-toggle");
@@ -2671,75 +3121,52 @@ components:
 
         if (html.getAttribute("data-theme") === "dark") {
           html.setAttribute("data-theme", "light");
-          themeIcon.innerHTML = svgMoon; // Show Moon for Light Mode (to switch to Dark)
+          themeIcon.innerHTML = svgMoon;
           themeText.textContent = "Dark";
           localStorage.setItem("theme", "light");
         } else {
           html.setAttribute("data-theme", "dark");
-          themeIcon.innerHTML = svgSun; // Show Sun for Dark Mode (to switch to Light)
+          themeIcon.innerHTML = svgSun;
           themeText.textContent = "Light";
           localStorage.setItem("theme", "dark");
         }
       }
 
-      (function initTheme() {
+      function initTheme() {
         const savedTheme = localStorage.getItem("theme");
         const toggleBtn = document.querySelector(".theme-toggle");
         const themeIcon = toggleBtn.querySelector(".theme-icon");
         const themeText = toggleBtn.querySelector(".theme-text");
 
-        // Default to dark if no preference, or use saved preference
         const theme = savedTheme || "dark";
-
         document.documentElement.setAttribute("data-theme", theme);
 
         if (theme === "light") {
-          themeIcon.innerHTML = svgMoon; // Show Moon (go to dark)
+          themeIcon.innerHTML = svgMoon;
           themeText.textContent = "Dark";
         } else {
-          themeIcon.innerHTML = svgSun; // Show Sun (go to light)
+          themeIcon.innerHTML = svgSun;
           themeText.textContent = "Light";
         }
-      })();
+      }
 
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
+      // Reading progress
+      function initReadingProgress() {
+        window.addEventListener("scroll", () => {
+          const winHeight = window.innerHeight;
+          const docHeight = document.documentElement.scrollHeight;
+          const scrolled = window.scrollY;
+          const progress = (scrolled / (docHeight - winHeight)) * 100;
+
+          document.querySelector(".reading-progress-bar").style.width =
+            `${progress}%`;
         });
-      });
+      }
 
-      window.addEventListener("scroll", () => {
-        const backToTop = document.querySelector(".back-to-top");
-        backToTop.classList.toggle("visible", window.scrollY > 300);
-      });
-
+      // Scroll to top function
       function scrollToTop() {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
-
-      const sections = document.querySelectorAll(
-        "section[id], h2[id], h3[id], h4[id]",
-      );
-      const navLinks = document.querySelectorAll(".nav-link");
-
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((section) => {
-          if (window.scrollY >= section.offsetTop - 150) {
-            current = section.getAttribute("id");
-          }
-        });
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
-        });
-      });
     </script>
   </body>
 </html>
