@@ -12,7 +12,6 @@ const router = Router();
 
 router.post(
   "/checkout",
-  authenticate,
   upload.transactions.single("image"),
   createTransaction,
 );
