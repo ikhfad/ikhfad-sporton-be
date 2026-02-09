@@ -20,7 +20,7 @@ export const authenticate = (
 
   try {
     const decoded = jwt.verify(token, config.JWT_SECRET, {
-      algorithms: ["HS256"],
+      algorithms: ["HS512"],
     }) as { id: string; email: string };
     req.user = decoded;
     next();
