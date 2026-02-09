@@ -1,10 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.APP_JWT_SECRET || "there-is-no-secret";
+import config from "../config";
 
 export interface AuthRequest extends Request {
-  user?: any;
+  user?: { id: string; email: string };
 }
 
 export const authenticate = (
@@ -20,10 +19,20 @@ export const authenticate = (
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.JWT_SECRET, {
+      algorithms: ["HS256"],
+    }) as { id: string; email: string };
+    req.user = decoded;
     next();
   } catch (error) {
-    console.log(error);
-    res.status(401).json({ message: "Invalid Token!" });
+    if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ message: "Token has expired!" });
+      return;
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ message: "Invalid Token!" });
+      return;
+    }
+    res.status(401).json({ message: "Authentication failed!" });
   }
 };

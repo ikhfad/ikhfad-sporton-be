@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./app";
+import config from "./config";
 
 dotenv.config();
 
-const PORT = process.env.APP_PORT || "5000";
-const MONGO_URI = process.env.APP_MONGO_URI || "no-mongo-uri";
+const PORT = config.APP_PORT;
+const MONGO_URI = config.APP_MONGO_URI;
 
 mongoose
   .connect(MONGO_URI, {

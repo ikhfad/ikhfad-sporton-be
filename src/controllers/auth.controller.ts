@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
-
-const JWT_SECRET = process.env.APP_JWT_SECRET || "there-is-no-secret";
+import config from "../config";
 
 export const signin = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -23,9 +22,14 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      config.JWT_SECRET,
+      {
+        expiresIn: "24h",
+        algorithm: "HS512",
+      },
+    );
 
     res.json({
       token,
@@ -54,6 +58,7 @@ export const initiateAdmin = async (
         message:
           "We can only have 1 admin user, if you want to create new admin user, please delete the user manually from the database",
       });
+      return;
     }
 
     const salt = await bcrypt.genSalt(12);
