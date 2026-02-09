@@ -64,9 +64,8 @@ const validateEnv = (): Config => {
   }
 
   console.log("✅ Environment validation passed");
-  console.log(
-    `   JWT Secret: ${"*".repeat(JWT_SECRET!.length)} (${JWT_SECRET!.length} chars)`,
-  );
+  const maskedSecret = `${JWT_SECRET.slice(0, 4)}********${JWT_SECRET.slice(-4)}`;
+  console.log(`   JWT Secret: ${maskedSecret} (${JWT_SECRET.length} chars)`);
   console.log(`   MongoDB: Connected to valid URI`);
 
   return {
