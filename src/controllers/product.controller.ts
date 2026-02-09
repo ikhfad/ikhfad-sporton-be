@@ -134,7 +134,7 @@ export const deleteProduct = async (
     const product = await Product.findById(id);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.status(400).json({ message: "Invalid Category ID format" });
+      res.status(400).json({ message: "Invalid Product ID format" });
       return;
     }
 
