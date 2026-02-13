@@ -7,17 +7,27 @@ import bankRoutes from "./routes/bank.routes";
 import transactionRoutes from "./routes/transaction.routes";
 import { authenticate } from "./middlewares/auth.middleware";
 import path from "path";
+import config from "./config";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://ikhfad-sporton-fe.vercel.app",
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+if (config.isDevelopment) {
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    }),
+  );
+} else {
+  app.use(
+    cors({
+      origin: "https://ikhfad-sporton-fe.vercel.app",
+      methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+  );
+}
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));

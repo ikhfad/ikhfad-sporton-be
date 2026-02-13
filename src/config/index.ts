@@ -2,14 +2,21 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+export type AppEnv = "development" | "production";
+
 const JWT_SECRET = process.env.APP_JWT_SECRET || "there-is-no-secret";
 const APP_PORT = parseInt(process.env.APP_PORT || "5000", 10);
 const MONGO_URI = process.env.APP_MONGO_URI || "no-mongo-uri";
+const APP_ENV: AppEnv =
+  process.env.APP_ENV === "development" ? "development" : "production";
 
 interface Config {
   JWT_SECRET: string;
   APP_PORT: number;
   APP_MONGO_URI: string;
+  APP_ENV: AppEnv;
+  isDevelopment: boolean;
+  isProduction: boolean;
 }
 
 const validateEnv = (): Config => {
@@ -67,11 +74,15 @@ const validateEnv = (): Config => {
   const maskedSecret = `${JWT_SECRET.slice(0, 4)}********${JWT_SECRET.slice(-4)}`;
   console.log(`   JWT Secret: ${maskedSecret} (${JWT_SECRET.length} chars)`);
   console.log(`   MongoDB: Connected to valid URI`);
+  console.log(`   Environment: ${APP_ENV}`);
 
   return {
     JWT_SECRET: JWT_SECRET!,
     APP_PORT,
     APP_MONGO_URI: MONGO_URI!,
+    APP_ENV,
+    isDevelopment: APP_ENV === "development",
+    isProduction: APP_ENV === "production",
   };
 };
 
